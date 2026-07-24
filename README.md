@@ -3,7 +3,7 @@
 
 ## Overview
 
-The EHS Sign Form application is intended as a web-based tool for generating laboratory hazard information signs. Users can fill out a form to input contact information, laboratory hazards, and other parameters, and the app will automatically generate a sign as a PDF from pre-formatted HTML/CSS templates. The application can be integrated with EHS systems for accurate and efficient rollout of required signage.
+The UNC EHS Lab Entrance Sign Form application is intended as a web-based tool for generating laboratory hazard information signs. Users can fill out a form to input contact information, laboratory hazards, and other parameters, and the app will automatically generate a sign as a PDF from pre-formatted HTML/CSS templates. The application can be integrated with EHS systems for accurate and efficient rollout of required signage.
 
 ## Features
 
@@ -94,8 +94,8 @@ Additionally, for WeasyPrint to function correctly, you must have the GTK and re
 1. **Clone the Repository**
 
    ```
-   git clone https://github.com/your-username/ehs-sign-form.git
-   cd ehs-sign-form
+   git clone https://github.com/your-username/unc-ehs-lab-entrance-sign.git
+   cd unc-ehs-lab-entrance-sign
    ```
 
 
@@ -153,4 +153,4 @@ Additionally, for WeasyPrint to function correctly, you must have the GTK and re
 
 ## Contact Information
 
-For questions, issues, or contributions, please contact [prtruesdell@gmail.com].
+For questions, issues, or contributions, please contact [abokarev300@gmail.com].
