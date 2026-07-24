@@ -1,5 +1,5 @@
 
-# EHS Sign Form Application
+# UNC EHS Lab Entrance Sign Form Application
 
 ## Overview
 
@@ -29,7 +29,7 @@ The UNC EHS Lab Entrance Sign Form application is intended as a web-based tool f
 
 3. **Fill Out the Form**
 
-   Enter the required information in the form fields. Select the hazards present in your laboratory. Choose the desired orientation for the PDF sign (horizontal or vertical).
+   Enter the required information in the form fields. Select the hazards present in your laboratory. Choose the desired orientation for the PDF sign (horizontal or vertical). If multiple PIs, select option indicating so to include their information.
 
 4. **Generate the PDF**
 
@@ -38,29 +38,10 @@ The UNC EHS Lab Entrance Sign Form application is intended as a web-based tool f
 ## Directory Structure
 
 ```
-ehs-sign-form/
+unc-ehs-lab-entrance-sign/
 │
 ├── static/
-│   ├── css/
-│   │   ├── horizontalstyle.css
-│   │   ├── verticalstyle.css
-│   │   ├── horiz_bio_style.html
-│   │   └── vert_bio_style.html
-│   └── images/
-│       ├── 00EMPTY.png
-│       ├── 01radioactive.png
-│       ├── 01radioactive.svg
-│       ├── ... (13 other hazard icons)
-│
 ├── templates/
-│   ├── index.html
-│   ├── horizontal.html
-│   ├── vertical.html
-│   ├── horiz_bio.html
-│   └── vert_bio.html
-│
-├── venv/ (virtual environment)
-│
 ├── signapp.py
 ├── requirements.txt
 └── README.md
@@ -94,7 +75,7 @@ Additionally, for WeasyPrint to function correctly, you must have the GTK and re
 1. **Clone the Repository**
 
    ```
-   git clone https://github.com/your-username/unc-ehs-lab-entrance-sign.git
+   git clone https://github.com/abokarev/unc-ehs-lab-entrance-sign.git
    cd unc-ehs-lab-entrance-sign
    ```
 
@@ -153,4 +134,4 @@ Additionally, for WeasyPrint to function correctly, you must have the GTK and re
 
 ## Contact Information
 
-For questions, issues, or contributions, please contact [abokarev300@gmail.com].
+For questions, issues, or contributions, please contact [abokarev@unc.edu].
