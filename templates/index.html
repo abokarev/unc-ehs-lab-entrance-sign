@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <h1>EHS Lab Entrance Sign Form</h1>
+
+    <form name="form1" method="POST" action="/submit" onsubmit="return labSignValidate(this)">
+        <section>
+            <fieldset class="pi_fieldset">
+                <legend>Principal Investigator</legend>
+                <div class="form-row">
+                    <label for="PI_first_name">First name:</label>
+                    <input type="text" id="PI_first_name" name="PI_first_name" placeholder="Enter first name" required value="{{ request.form.get('PI_first_name', '') }}">
+                </div>
+                <div class="form-row">
+                    <label for="PI_last_name">Last name:</label>
+                    <input type="text" id="PI_last_name" name="PI_last_name" placeholder="Enter last name" required value="{{ request.form.get('PI_last_name', '') }}">
+                </div>
+                <div class="form-row">
+                    <label for="PI_phone">After-hours phone:</label>
+                    <input type="tel" id="PI_phone" name="PI_phone" placeholder="(123) 123-1234" required oninput="formatPhoneNumber(this)" value="{{ request.form.get('PI_phone', '') }}">
+                </div>
+                <div class="form-row">
+                    <label for="PI_after_hours">Secondary phone:</label>
+                    <input type="tel" id="PI_after_hours" name="PI_after_hours" placeholder="(123) 123-1234" oninput="formatPhoneNumber(this)" value="{{ request.form.get('PI_after_hours', '') }}">
+                </div>
+            </fieldset>
+        </section>
+        
+        <section>
+            <fieldset class="primary_fieldset">
+                <legend>Primary Contact</legend>
+                <div class="form-row">
+                    <label for="primary_first_name">First name:</label>
+                    <input type="text" id="primary_first_name" name="primary_first_name" placeholder="Enter first name" required value="{{ request.form.primary_first_name }}">
+                </div>
+                <div class="form-row">
+                    <label for="primary_last_name">Last name:</label>
+                    <input type="text" id="primary_last_name" name="primary_last_name" placeholder="Enter last name" required value="{{ request.form.primary_last_name }}">
+                </div>
+                <div class="form-row">
+                    <label for="primary_after_hours">After-hours phone:</label>
+                    <input type="tel" id="primary_after_hours" name="primary_after_hours" placeholder="(123) 123-1234" required oninput="formatPhoneNumber(this)" value="{{ request.form.primary_after_hours }}">
+                </div>
+                <div class="form-row">
+                    <label for="primary_phone">Secondary phone:</label>
+                    <input type="tel" id="primary_phone" name="primary_phone" placeholder="(123) 123-1234" oninput="formatPhoneNumber(this)" value="{{ request.form.primary_phone }}">
+                </div>
+            </fieldset>
+        </section>
+        
+        <section>
+            <fieldset class="alternate_fieldset">
+                <legend>Alternate Contact (optional)</legend>
+                <div class="form-row">
+                    <label for="alternate_first_name">First name:</label>
+                    <input type="text" id="alternate_first_name" name="alternate_first_name" placeholder="Enter first name" value="{{ request.form.alternate_first_name }}">
+                </div>
+                <div class="form-row">
+                    <label for="alternate_last_name">Last name:</label>
+                    <input type="text" id="alternate_last_name" name="alternate_last_name" placeholder="Enter last name" value="{{ request.form.alternate_last_name }}">
+                </div>
+                <div class="form-row">
+                    <label for="alternate_phone">After-hours phone:</label>
+                    <input type="tel" id="alternate_phone" name="alternate_phone" placeholder="(123) 123-1234" oninput="formatPhoneNumber(this)" value="{{ request.form.alternate_phone }}">
+                </div>
+                <div class="form-row">
+                    <label for="alternate_after_hours">Secondary phone:</label>
+                    <input type="tel" id="alternate_after_hours" name="alternate_after_hours" placeholder="(123) 123-1234" oninput="formatPhoneNumber(this)" value="{{ request.form.alternate_after_hours }}">
+                </div>
+            </fieldset>
+        </section>     
+
+        <section>
+            <fieldset class="lab_info_fieldset">
+                <legend>Laboratory Information</legend>
+                <div class="form-row">
+                    <label for="department">Department:</label>
+                    <input type="text" id="department" name="department" placeholder="Enter department" value="{{ request.form.department }}">
+                </div>
+                <div class="form-row">
+                    <label for="building">Building:</label>
+                    <input type="text" list="buildings" id="building" name="building" placeholder="Enter or select building" value="{{ request.form.get('building', '') }}">
+                    <datalist id="buildings">
+                        {% for building in buildings %}
+                            <option value="{{ building['building'] }}"></option>
+                        {% endfor %}
+                    </datalist>
+                </div>
+                <div class="form-row">
+                    <label for="room_number">Room Number:</label>
+                    <input type="text" id="room_number" name="room_number" placeholder="Enter room number" value="{{ request.form.room_number }}">
+                </div>
+            </fieldset>
+        </section>
+
+        <section>
+            <fieldset class="lab_hazards_fieldset">
+                <legend>Laboratory Hazards</legend>
+                <p>Indicate the hazards present in your workspace.</p>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <h3>Biohazard</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="biohazard" name="biohazard" value="biohazard" {{ 'checked' if 'biohazard' in request.form else '' }}>
+                            <label for="biohazard"><img src="{{ url_for('static', filename='images/04biohazard.png') }}" alt="Biohazard"></label>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Cancer Hazard</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="cancer" name="cancer" value="cancer" {{ 'checked' if 'cancer' in request.form else '' }}>
+                            <label for="cancer"><img src="{{ url_for('static', filename='images/05cancer.png') }}" alt="Cancer Hazard"></label>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Corrosive Materials</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="corrosive" name="corrosive" value="corrosive" {{ 'checked' if 'corrosive' in request.form else '' }}>
+                            <label for="corrosive"><img src="{{ url_for('static', filename='images/08corrosive.png') }}" alt="Corrosive Materials"></label>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Flammable Gas</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="flammableg" name="flammableg" value="flammableg" {{ 'checked' if 'flammableg' in request.form else '' }}>
+                            <label for="flammableg"><img src="{{ url_for('static', filename='images/13flammable_gas.png') }}" alt="Flammable Gas"></label>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Flammable Materials</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="flammablem" name="flammablem" value="flammablem" {{ 'checked' if 'flammablem' in request.form else '' }}>
+                            <label for="flammablem"><img src="{{ url_for('static', filename='images/10flammable_materials.png') }}" alt="Flammable Materials"></label>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Laser Radiation</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="laser" name="laser" value="laser" {{ 'checked' if 'laser' in request.form else '' }}>
+                            <label for="laser"><img src="{{ url_for('static', filename='images/03laser.png') }}" alt="Laser Radiation"></label>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Non-Flammable Gas</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="nflammableg" name="nflammableg" value="nflammableg" {{ 'checked' if 'nflammableg' in request.form else '' }}>
+                            <label for="nflammableg"><img src="{{ url_for('static', filename='images/14non_flammable_gas.png') }}" alt="Non-Flammable Gas"></label>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Oxidizing Materials</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="oxidizing" name="oxidizing" value="oxidizing" {{ 'checked' if 'oxidizing' in request.form else '' }}>
+                            <label for="oxidizing"><img src="{{ url_for('static', filename='images/11oxidizing.png') }}" alt="Oxidizing Materials"></label>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Radioactive Materials</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="radioactive" name="radioactive" value="radioactive" {{ 'checked' if 'radioactive' in request.form else '' }}>
+                            <label for="radioactive"><img src="{{ url_for('static', filename='images/01radioactive.png') }}" alt="Radioactive Materials"></label>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Reproductive Toxin</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="reproductive" name="reproductive" value="reproductive" {{ 'checked' if 'reproductive' in request.form else '' }}>
+                            <label for="reproductive"><img src="{{ url_for('static', filename='images/07reproductive_toxin.png') }}" alt="Reproductive Toxin"></label>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Highly Toxic</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="toxic" name="toxic" value="toxic" {{ 'checked' if 'toxic' in request.form else '' }}>
+                            <label for="toxic"><img src="{{ url_for('static', filename='images/06toxic.png') }}" alt="Highly Toxic"></label>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Ultraviolet Light</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="ultraviolet" name="ultraviolet" value="ultraviolet" {{ 'checked' if 'ultraviolet' in request.form else '' }}>
+                            <label for="ultraviolet"><img src="{{ url_for('static', filename='images/09ultraviolet.png') }}" alt="Ultraviolet Light"></label>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Water Reactive</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="water" name="water" value="water" {{ 'checked' if 'water' in request.form else '' }}>
+                            <label for="water"><img src="{{ url_for('static', filename='images/12water.png') }}" alt="Water Reactive"></label>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>X-Ray Equipment</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="xray" name="xray" value="xray" {{ 'checked' if 'xray' in request.form else '' }}>
+                            <label for="xray"><img src="{{ url_for('static', filename='images/02xray.png') }}" alt="X-Ray Equipment"></label>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+
+        <section id="biolevel" style = "display: none;">
+            <fieldset>
+                <legend>Biological Safety Level</legend>
+                <div class="bsl-container">
+                    <div class="form-row">
+                        <input type="radio" id="bsl1" name="bsl" value="BSL1"/>                   
+                        <label for="bsl1">BSL1</label>
+                    </div>
+                    <div class="form-row">
+                        <input type="radio" id="bsl2" name="bsl" value="BSL2"/>                   
+                        <label for="bsl2">BSL2</label>
+                    </div>
+                    <div class="form-row">
+                        <input type="radio" id="bsl2plus" name="bsl" value="BSL2+"/>                   
+                        <label for="bsl2plus">BSL2+</label>
+                    </div>
+                    <div class="form-row">
+                        <input type="radio" id="bsl3" name="bsl" value="BSL3"/>                   
+                        <label for="bsl3">BSL3</label>
+                    </div>
+                </div>
+                
+            </fieldset>
+        </section>
+
+       <section id="bio-agents" style="display: none;">
+            <fieldset>
+                <legend>Biological Agents</legend>
+
+                <!-- Animal Source Material -->
+                <div class="form-row">
+                    <strong>Animal Source Material</strong>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="animal_clinical" name="biological_agents" value="Animal source material (clinical specimens)"/>                   
+                    <label for="animal_clinical">Animal Source Material (Clinical specimens)</label>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="animal_tissue" name="biological_agents" value="Animal source material (tissue/cell culture)"/>                   
+                    <label for="animal_tissue">Animal Source Material (Tissue/cell culture)</label>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="animal_other" name="biological_agents" value="Animal source material (other)"/>                   
+                    <label for="animal_other">Animal Source Material (Other)</label>
+                </div>
+
+                <!-- Human Source Material -->
+                <div class="form-row">
+                    <strong>Human Source Material</strong>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="human_clinical" name="biological_agents" value="Human source material (clinical specimens)"/>                   
+                    <label for="human_clinical">Human Source Material (Clinical specimens)</label>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="human_tissue" name="biological_agents" value="Human source material (tissue/cell culture)"/>                   
+                    <label for="human_tissue">Human Source Material (Tissue/cell culture)</label>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="human_other" name="biological_agents" value="Human source material (other)"/>                   
+                    <label for="human_other">Human Source Material (Other)</label>
+                </div>
+
+                <!-- Non-Human Primate Source Material -->
+                <div class="form-row">
+                    <strong>Non-Human Primate Source Material</strong>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="nonhuman_rhesus" name="biological_agents" value="Non-human primate source material (R. macaque derived)"/>                   
+                    <label for="nonhuman_rhesus">Non-Human Primate Source Material (R. macaque derived)</label>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="nonhuman_other" name="biological_agents" value="Non-human primate source material (other)"/>                   
+                    <label for="nonhuman_other">Non-Human Primate Source Material (Other)</label>
+                </div>
+
+                <!-- Fungi -->
+                <div class="form-row">
+                    <strong>Fungi</strong>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="fungi_culture" name="biological_agents" value="Fungi (culturing)"/>                   
+                    <label for="fungi_culture">Fungi (Culturing)</label>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="fungi_bioassay" name="biological_agents" value="Fungi (bioassay/other)"/>                   
+                    <label for="fungi_bioassay">Fungi (Bioassay/other)</label>
+                </div>
+
+                <!-- Bacteria -->
+                <div class="form-row">
+                    <strong>Bacteria</strong>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="bacteria_culture" name="biological_agents" value="Bacteria (culturing)"/>                   
+                    <label for="bacteria_culture">Bacteria (Culturing)</label>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="bacteria_bioassay" name="biological_agents" value="Bacteria (bioassay/other)"/>                   
+                    <label for="bacteria_bioassay">Bacteria (Bioassay/other)</label>
+                </div>
+
+                <!-- Virus -->
+                <div class="form-row">
+                    <strong>Virus</strong>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="virus_culture" name="biological_agents" value="Virus (culturing)"/>                   
+                    <label for="virus_culture">Virus (Culturing)</label>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="virus_bioassay" name="biological_agents" value="Virus (bioassay/other)"/>                   
+                    <label for="virus_bioassay">Virus (Bioassay/other)</label>
+                </div>
+
+                <!-- Recombinant/Synthetic Nucleic Acids -->
+                <div class="form-row">
+                    <strong>Recombinant/Synthetic Nucleic Acids</strong>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="plasmids" name="biological_agents" value="Plasmids"/>                   
+                    <label for="plasmids">Recombinant/Synthetic Nucleic Acids (Plasmids)</label>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="viral_vectors" name="biological_agents" value="Viral vectors"/>                   
+                    <label for="viral_vectors">Recombinant/Synthetic Nucleic Acids (Viral vectors)</label>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="recombinant" name="biological_agents" value="Recombinant/synthetic nucleic acids (other)"/>                   
+                    <label for="recombinant">Recombinant/Synthetic Nucleic Acids (Other)</label>
+                </div>
+
+                <!-- Other Biological Agents -->
+                <div class="form-row">
+                    <strong>Other Biological Agents</strong>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="biological_toxin" name="biological_agents" value="Biological toxin"/>                   
+                    <label for="biological_toxin">Other Biological Agents (Biological toxin)</label>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="prions" name="biological_agents" value="Prions"/>                   
+                    <label for="prions">Other Biological Agents (Prions)</label>
+                </div>
+                <div class="sub-form-row">
+                    <input type="checkbox" id="other" name="biological_agents" value="Other" onclick="toggleOtherTextBox(this)"/>                   
+                    <label for="other">Other Biological Agents (Other)</label>
+                </div>
+                <div class="sub-form-row" id="otherTextBox" style="display: none; margin-left: 20px;">
+                    <label for="other_specify">Please specify:</label>
+                    <input type="text" id="other_specify" name="other_biological_agent"/>
+                </div>
+            </fieldset>
+        </section>
+
+        
+    
+        <section id="vaccines-required" style="display: none;">
+            <fieldset>
+                <legend>Vaccines Required</legend>
+                <div class="form-row">
+                    <input type="checkbox" id="anthrax" name="vaccines" value="Anthrax"/>                   
+                    <label for="anthrax">Anthrax</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="bcg_tb" name="vaccines" value="Bacille Calmette-Guérin (BCG)/ Tuberculosis (TB) Disease"/>                   
+                    <label for="bcg_tb">Bacille Calmette-Guérin (BCG)/ Tuberculosis (TB) Disease</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="cholera" name="vaccines" value="Cholera"/>                   
+                    <label for="cholera">Cholera</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="covid" name="vaccines" value="COVID-19 Vaccine and Current Booster"/>                   
+                    <label for="covid">COVID-19 Vaccine and Current Boster</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="dtap_tdap_td" name="vaccines" value="DTaP/Tdap/Td (Pertussis, Tetanus, and Diphtheria)"/>                   
+                    <label for="dtap_tdap_td">DTaP/Tdap/Td (Pertussis, Tetanus, and Diphtheria)</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="hepatitis_a" name="vaccines" value="Hepatitis A"/>                   
+                    <label for="hepatitis_a">Hepatitis A</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="hepatitis_b" name="vaccines" value="Hepatitis B"/>                   
+                    <label for="hepatitis_b">Hepatitis B</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="hib" name="vaccines" value="Hib (Haemophilus Influenzae type B)"/>                   
+                    <label for="hib">Hib (Haemophilus Influenzae type B)</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="hpv" name="vaccines" value="Human Papillomavirus (HPV)"/>                   
+                    <label for="hpv">Human Papillomavirus (HPV)</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="influenza" name="vaccines" value="Influenza"/>                   
+                    <label for="influenza">Influenza</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="japanese_encephalitis" name="vaccines" value="Japanese Encephalitis"/>                   
+                    <label for="japanese_encephalitis">Japanese Encephalitis</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="mmr" name="vaccines" value="MMR (Measles, Mumps and Rubella)"/>                   
+                    <label for="mmr">MMR (Measles, Mumps and Rubella)</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="mmrv" name="vaccines" value="MMRV (Measles, Mumps, Rubella, and Varicella)"/>                   
+                    <label for="mmrv">MMRV (Measles, Mumps, Rubella, and Varicella)</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="meningococcal" name="vaccines" value="Meningococcal"/>                   
+                    <label for="meningococcal">Meningococcal</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="pertussis" name="vaccines" value="Pertussis"/>                   
+                    <label for="pertussis">Pertussis</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="pneumococcal" name="vaccines" value="Pneumococcal"/>                   
+                    <label for="pneumococcal">Pneumococcal</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="polio" name="vaccines" value="Polio"/>                   
+                    <label for="polio">Polio</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="rabies" name="vaccines" value="Rabies"/>                   
+                    <label for="rabies">Rabies</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="rotavirus" name="vaccines" value="Rotavirus"/>                   
+                    <label for="rotavirus">Rotavirus</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="smallpox" name="vaccines" value="Vaccinia (Smallpox) Vaccine"/>                   
+                    <label for="smallpox">Vaccinia (Smallpox) Vaccine</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="tetanus" name="vaccines" value="Tetanus"/>                   
+                    <label for="tetanus">Tetanus</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="tick_borne_encephalitis" name="vaccines" value="Tick-borne Encephalitis Virus (TBEV)"/>                   
+                    <label for="tick_borne_encephalitis">Tick-borne Encephalitis Virus (TBEV)</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="typhoid" name="vaccines" value="Typhoid (Salmonella serotype Typhi)"/>                   
+                    <label for="typhoid">Typhoid (Salmonella serotype Typhi)</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="varicella" name="vaccines" value="Varicella (Chickenpox)"/>                   
+                    <label for="varicella">Varicella (Chickenpox)</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="yellow_fever" name="vaccines" value="Yellow Fever"/>                   
+                    <label for="yellow_fever">Yellow Fever</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="zoster" name="vaccines" value="Zoster (Shingles)"/>                   
+                    <label for="zoster">Zoster (Shingles)</label>
+                </div>
+            </fieldset>
+        </section>
+    
+        <section id="medical-surveillance" style="display: none;">
+            <fieldset>
+                <legend>Medical Surveillance Required</legend>
+                <div class="form-row">
+                    <input type="checkbox" id="respiratory_protection" name="medical_surveillance" value="Respiratory Protection Physical"/>                   
+                    <label for="respiratory_protection">Respiratory Protection Physical</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="bsl3_physical" name="medical_surveillance" value="BSL3 Physical"/>                   
+                    <label for="bsl3_physical">BSL3 Physical</label>
+                </div>
+                <div class="form-row">
+                    <input type="checkbox" id="tb_skin_test" name="medical_surveillance" value="Tuberculosis Skin Test"/>                   
+                    <label for="tb_skin_test">Tuberculosis Skin Test</label>
+                </div>
+            </fieldset>
+        </section>
+        
+        <section>
+            <fieldset>
+                <legend>Sign Details</legend>
+
+                <p>Are sign holders installed at each room or bay entrance?</p>
+
+                <div class="multi-sign-grid-container">
+                    <div class="multi-sign-grid-item">
+                        <input type="radio" id="signs_yes" name="signs" value="yes" onchange="toggleSignFields()" {{ 'checked' if request.form.get('signs') == 'yes' else 'checked' if not request.form.get('signs') else '' }}>
+                        <label for="signs_yes">Yes</label>
+                    </div>
+                    <div class="multi-sign-grid-item">
+                        <input type="radio" id="signs_no" name="signs" value="no" onchange="toggleSignFields()" {{ 'checked' if request.form.get('signs') == 'no' else '' }}>
+                        <label for="signs_no">No</label>
+                    </div>
+                </div>
+                       
+        
+                <div id="signFieldsYes" class="multi-sign-follow-up" style="display: none;">
+                    <div class="multi-sign-grid-item">
+                        <p>In what orientation are the sign holders?</p>
+                        <div class="orientation-options">
+                            <input type="radio" id="horizontal" name="orientation" value="horizontal" {{ 'checked' if request.form.get('orientation') == 'horizontal' else '' }}>
+                            <label for="horizontal" class="horizontal-label">Horizontal (▭)</label>
+                        </div>
+                        <div class="orientation-options">
+                            <input type="radio" id="vertical" name="orientation" value="vertical" {{ 'checked' if request.form.get('orientation') == 'vertical' else '' }}>
+                            <label for="vertical" class="vertical-label">Vertical (▯)</label>
+                        </div>
+                    </div>
+                    <div class="multi-sign-grid-item">
+                        <p>How many signs do you need? (If lab bay, count sign holders on both sides of the bay.)</p>
+                        <input type="number" id="num_signs" name="num_signs" value="{{ request.form.num_signs }}">
+                    </div>
+                </div>
+        
+                <div id="signFieldsNo" class="multi-sign-follow-up" style="display: none;">
+                    <div class="multi-sign-grid-item">
+                        <p>How many entrances does the room or bay have? (Four entrances for a full lab bay. Two entrances for a half bay.)<p>
+                        <input type="number" id="num_entrances" name="num_entrances" value="{{ request.form.num_entrances }}">
+                    </div>
+                </div>
+            </fieldset>
+        </section>
+        
+        <section>
+            <fieldset class="shared-space-fieldset">
+                <legend>Shared Spaces</legend>
+                
+                <p>Is this room shared between multiple labs?</p>
+                <div class="shared-space-question">
+                    <div class="shared-space-option">
+                        <input type="radio" id="shared_yes" name="shared" value="yes">
+                        <label for="shared_yes">Yes</label>
+                    </div>
+                    <div class="shared-space-option">
+                        <input type="radio" id="shared_no" name="shared" value="no" checked>
+                        <label for="shared_no">No</label>
+                    </div>
+                </div>
+                
+                <p id="customSignMessage" style="display: none;">
+                    List additional names and contact numbers to include on the sign:
+                </p>
+                <textarea id="additionalInfo" name="additionalInfo" rows="4" cols="50" style="display: none;"></textarea>
+                <p id="submitMessage" style="display: none;">
+                    Submit the form, and we will create a custom sign for you.
+                </p>
+        
+            </fieldset>
+        </section>
+        
+
+        <input type="submit" value="Submit Sign Form" class="submit-button">
+    </form>
+    
+    <script>
+        // Function to toggle the visibility of the "Other" text box
+        function toggleOtherTextBox(checkbox) {
+            var textBox = document.getElementById('otherTextBox');
+            textBox.style.display = checkbox.checked ? 'block' : 'none';
+        }
+    
+        // Function to format phone numbers
+        function formatPhoneNumber(input) {
+            let phoneNumber = input.value.replace(/\D/g, '');
+            if (phoneNumber.length <= 3) {
+                input.value = `(${phoneNumber}`;
+            } else if (phoneNumber.length <= 6) {
+                input.value = `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+            } else {
+                input.value = `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
+            }
+        }
+    
+        // Function to toggle the visibility of sign fields
+        function toggleSignFields() {
+            var yesRadio = document.getElementById('signs_yes');
+            var signFieldsYes = document.getElementById('signFieldsYes');
+            var signFieldsNo = document.getElementById('signFieldsNo');
+    
+            // Toggle visibility based on the "yes" or "no" selection
+            if (yesRadio.checked) {
+                signFieldsYes.style.display = 'block';
+                signFieldsNo.style.display = 'none';
+            } else {
+                signFieldsYes.style.display = 'none';
+                signFieldsNo.style.display = 'block';
+            }
+        }
+    
+        // Function to toggle the visibility of biological sections
+        function toggleBiologicalSections() {
+            var biohazardCheckbox = document.getElementById('biohazard');
+            var biolevel = document.getElementById('biolevel');
+            var bioAgents = document.getElementById('bio-agents');
+            var vaccinesRequired = document.getElementById('vaccines-required');
+            var medicalSurveillance = document.getElementById('medical-surveillance');
+    
+            // Show or hide sections based on the biohazard checkbox
+            if (biohazardCheckbox.checked) {
+                biolevel.style.display = 'block';
+                bioAgents.style.display = 'block';
+                vaccinesRequired.style.display = 'block';
+                medicalSurveillance.style.display = 'block';
+            } else {
+                biolevel.style.display = 'none';
+                bioAgents.style.display = 'none';
+                vaccinesRequired.style.display = 'none';
+                medicalSurveillance.style.display = 'none';
+            }
+        }
+    
+        // Function to toggle the visibility of custom sign message for shared spaces
+        function toggleCustomSignMessage() {
+            var yesOption = document.getElementById('shared_yes');
+            var message = document.getElementById('customSignMessage');
+            var textarea = document.getElementById('additionalInfo');
+            var submitMessage = document.getElementById('submitMessage');
+    
+            // Show or hide the custom sign message based on "shared" option
+            if (yesOption.checked) {
+                message.style.display = 'block';
+                textarea.style.display = 'block';
+                submitMessage.style.display = 'block';
+            } else {
+                message.style.display = 'none';
+                textarea.style.display = 'none';
+                submitMessage.style.display = 'none';
+            }
+        }
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners for phone inputs to format phone numbers
+            document.getElementById('PI_phone').addEventListener('input', function() {
+                formatPhoneNumber(this);
+            });
+    
+            document.getElementById('PI_after_hours').addEventListener('input', function() {
+                formatPhoneNumber(this);
+            });
+    
+            document.getElementById('primary_phone').addEventListener('input', function() {
+                formatPhoneNumber(this);
+            });
+    
+            document.getElementById('primary_after_hours').addEventListener('input', function() {
+                formatPhoneNumber(this);
+            });
+    
+            document.getElementById('alternate_phone').addEventListener('input', function() {
+                formatPhoneNumber(this);
+            });
+    
+            document.getElementById('alternate_after_hours').addEventListener('input', function() {
+                formatPhoneNumber(this);
+            });
+    
+            // Add event listeners for toggleable sections
+            document.getElementById('biohazard').addEventListener('change', toggleBiologicalSections);
+            document.getElementById('shared_yes').addEventListener('change', toggleCustomSignMessage);
+            document.getElementById('shared_no').addEventListener('change', toggleCustomSignMessage);
+            document.getElementById('signs_yes').addEventListener('change', toggleSignFields);
+            document.getElementById('signs_no').addEventListener('change', toggleSignFields);
+    
+            // Call functions on page load to handle pre-checked states
+            toggleSignFields();  // Ensure sign fields are displayed correctly on page load
+            toggleCustomSignMessage();  // Ensure shared room message is handled correctly on page load
+            toggleBiologicalSections();  // Ensure biological sections are displayed if biohazard is checked
+    
+            // Handle error messages on page load
+            var errorMessage = "{{ error_message }}";
+            if (errorMessage) {
+                alert(errorMessage);
+                highlightErrorFields();
+            }
+    
+            // Set placeholder text for additional info textarea
+            var textarea = document.getElementById('additionalInfo');
+            textarea.placeholder = "Additional PI: Alice Smith (555) 123-4567\nAlternate contact: Bob Johnson (555) 987-6543";
+        });
+    </script>
+    
+    
+    
+    
+    
+    
+</body>
+</html>
