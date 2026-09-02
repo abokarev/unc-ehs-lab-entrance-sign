@@ -7,13 +7,12 @@
     <title>Lab Sign Template</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/verticalstyle.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vert_bio_style_shared_6PIsMax.css') }}">
 </head>
 
 <body>
 
 <div class="container">
-
 
     <!-- =========================
     HEADER
@@ -30,10 +29,12 @@
 
     <div class="hazard-icons">
 
-        {% for icon in hazard_icons %}
+        {% for icon in hazard_icons[:5] %}
+
         <div>
             <img src="{{ icon }}" alt="Hazard Icon">
         </div>
+
         {% endfor %}
 
     </div>
@@ -56,7 +57,7 @@
 
 
         <!-- =========================
-        EMERGENCY CONTACT SECTION
+        EMERGENCY CONTACTS
         ========================= -->
 
         <div class="contact-section">
@@ -94,49 +95,82 @@
 
 
         <!-- =========================
-        FOOTER
+        BIOSAFETY INFORMATION
         ========================= -->
 
-        <div class="footer">
+        <div class="bio-section">
+
+            <div class="bio-header">
+                BIOSAFETY INFORMATION
+            </div>
 
 
-            <!-- =========================
-            DEPARTMENT + DATE UPDATED
-            ========================= -->
+            <div class="bio-table">
 
-            <div class="footer-meta">
+                <div class="bio-top-row">
 
-                <div class="meta-item">
+                    <div class="bio-bsl">
 
-                    <span class="meta-label">
-                        Department:
-                    </span>
+                        <span class="bio-bsl-text">
+                            Biosafety Level {{ bsl|replace('BSL', '') }}
+                        </span>
 
-                    <span class="meta-value">
-                        {{ department }}
-                    </span>
+                    </div>
+
+
+                    <div class="bio-occ">
+
+                        <span class="bio-label">
+                            Occupational Health Requirements:
+                        </span>
+
+                        <span class="bio-value">
+                            {{ occupational_health_requirements }}
+                        </span>
+
+                    </div>
 
                 </div>
 
 
-                <div class="meta-item">
+                <div class="bio-agents">
 
-                    <span class="meta-label">
-                        Date Updated:
+                    <span class="bio-label">
+                        Biological Agents:
                     </span>
 
-                    <span class="meta-value">
-                        {{ date_updated }}
+                    <span class="bio-value">
+                        {{ biological_agents }}
                     </span>
 
                 </div>
 
             </div>
 
+        </div>
 
-            <!-- =========================
-            PPE WARNING
-            ========================= -->
+
+        <!-- =========================
+        FOOTER
+        ========================= -->
+
+        <div class="footer">
+
+
+            <div class="footer-meta">
+
+                <div class="meta-item">
+                    <span class="meta-label">Department:</span>
+                    <span class="meta-value">{{ department }}</span>
+                </div>
+
+                <div class="meta-item">
+                    <span class="meta-label">Date Updated:</span>
+                    <span class="meta-value">{{ date_updated }}</span>
+                </div>
+
+            </div>
+
 
             <div class="warning">
 
@@ -146,10 +180,6 @@
 
             </div>
 
-
-            <!-- =========================
-            EMERGENCY + EHS
-            ========================= -->
 
             <div class="footer-emergency">
 

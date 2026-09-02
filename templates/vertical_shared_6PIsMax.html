@@ -7,13 +7,12 @@
     <title>Lab Sign Template</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/verticalstyle.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/verticalstyle_shared_6PIsMax.css') }}">
 </head>
 
 <body>
 
 <div class="container">
-
 
     <!-- =========================
     HEADER
@@ -26,15 +25,35 @@
 
     <!-- =========================
     HAZARD ICONS
+    EXPLICIT TWO ROWS OF FIVE
     ========================= -->
 
     <div class="hazard-icons">
 
-        {% for icon in hazard_icons %}
-        <div>
-            <img src="{{ icon }}" alt="Hazard Icon">
+        <div class="hazard-row">
+
+            {% for icon in hazard_icons[:5] %}
+
+            <div class="hazard-icon">
+                <img src="{{ icon }}" alt="Hazard Icon">
+            </div>
+
+            {% endfor %}
+
         </div>
-        {% endfor %}
+
+
+        <div class="hazard-row">
+
+            {% for icon in hazard_icons[5:10] %}
+
+            <div class="hazard-icon">
+                <img src="{{ icon }}" alt="Hazard Icon">
+            </div>
+
+            {% endfor %}
+
+        </div>
 
     </div>
 
@@ -56,7 +75,7 @@
 
 
         <!-- =========================
-        EMERGENCY CONTACT SECTION
+        EMERGENCY CONTACTS
         ========================= -->
 
         <div class="contact-section">
@@ -100,43 +119,20 @@
         <div class="footer">
 
 
-            <!-- =========================
-            DEPARTMENT + DATE UPDATED
-            ========================= -->
-
             <div class="footer-meta">
 
                 <div class="meta-item">
-
-                    <span class="meta-label">
-                        Department:
-                    </span>
-
-                    <span class="meta-value">
-                        {{ department }}
-                    </span>
-
+                    <span class="meta-label">Department:</span>
+                    <span class="meta-value">{{ department }}</span>
                 </div>
 
-
                 <div class="meta-item">
-
-                    <span class="meta-label">
-                        Date Updated:
-                    </span>
-
-                    <span class="meta-value">
-                        {{ date_updated }}
-                    </span>
-
+                    <span class="meta-label">Date Updated:</span>
+                    <span class="meta-value">{{ date_updated }}</span>
                 </div>
 
             </div>
 
-
-            <!-- =========================
-            PPE WARNING
-            ========================= -->
 
             <div class="warning">
 
@@ -146,10 +142,6 @@
 
             </div>
 
-
-            <!-- =========================
-            EMERGENCY + EHS
-            ========================= -->
 
             <div class="footer-emergency">
 

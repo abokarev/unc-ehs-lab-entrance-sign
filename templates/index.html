@@ -14,67 +14,20 @@
     <form name="form1" method="POST" action="/submit" onsubmit="return labSignValidate(this)">
         <section>
             <fieldset class="pi_fieldset">
-                <legend>Principal Investigator</legend>
+                <legend>Shared Space or Solo Lab?</legend>
                 <div class="form-row">
-                    <label for="PI_first_name">First name:</label>
-                    <input type="text" id="PI_first_name" name="PI_first_name" placeholder="Enter first name" required value="{{ request.form.get('PI_first_name', '') }}">
+                    <label for="num_pis">Number of PIs:</label>
+                    <select id="num_pis" name="num_pis" onchange="updateContactFields()">
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
                 </div>
-                <div class="form-row">
-                    <label for="PI_last_name">Last name:</label>
-                    <input type="text" id="PI_last_name" name="PI_last_name" placeholder="Enter last name" required value="{{ request.form.get('PI_last_name', '') }}">
-                </div>
-                <div class="form-row">
-                    <label for="PI_phone">After-hours phone:</label>
-                    <input type="tel" id="PI_phone" name="PI_phone" placeholder="(123) 123-1234" required oninput="formatPhoneNumber(this)" value="{{ request.form.get('PI_phone', '') }}">
-                </div>
-                <div class="form-row">
-                    <label for="PI_after_hours">Secondary phone:</label>
-                    <input type="tel" id="PI_after_hours" name="PI_after_hours" placeholder="(123) 123-1234" oninput="formatPhoneNumber(this)" value="{{ request.form.get('PI_after_hours', '') }}">
-                </div>
-            </fieldset>
-        </section>
-        
-        <section>
-            <fieldset class="primary_fieldset">
-                <legend>Primary Contact</legend>
-                <div class="form-row">
-                    <label for="primary_first_name">First name:</label>
-                    <input type="text" id="primary_first_name" name="primary_first_name" placeholder="Enter first name" required value="{{ request.form.primary_first_name }}">
-                </div>
-                <div class="form-row">
-                    <label for="primary_last_name">Last name:</label>
-                    <input type="text" id="primary_last_name" name="primary_last_name" placeholder="Enter last name" required value="{{ request.form.primary_last_name }}">
-                </div>
-                <div class="form-row">
-                    <label for="primary_after_hours">After-hours phone:</label>
-                    <input type="tel" id="primary_after_hours" name="primary_after_hours" placeholder="(123) 123-1234" required oninput="formatPhoneNumber(this)" value="{{ request.form.primary_after_hours }}">
-                </div>
-                <div class="form-row">
-                    <label for="primary_phone">Secondary phone:</label>
-                    <input type="tel" id="primary_phone" name="primary_phone" placeholder="(123) 123-1234" oninput="formatPhoneNumber(this)" value="{{ request.form.primary_phone }}">
-                </div>
-            </fieldset>
-        </section>
-        
-        <section>
-            <fieldset class="alternate_fieldset">
-                <legend>Alternate Contact (optional)</legend>
-                <div class="form-row">
-                    <label for="alternate_first_name">First name:</label>
-                    <input type="text" id="alternate_first_name" name="alternate_first_name" placeholder="Enter first name" value="{{ request.form.alternate_first_name }}">
-                </div>
-                <div class="form-row">
-                    <label for="alternate_last_name">Last name:</label>
-                    <input type="text" id="alternate_last_name" name="alternate_last_name" placeholder="Enter last name" value="{{ request.form.alternate_last_name }}">
-                </div>
-                <div class="form-row">
-                    <label for="alternate_phone">After-hours phone:</label>
-                    <input type="tel" id="alternate_phone" name="alternate_phone" placeholder="(123) 123-1234" oninput="formatPhoneNumber(this)" value="{{ request.form.alternate_phone }}">
-                </div>
-                <div class="form-row">
-                    <label for="alternate_after_hours">Secondary phone:</label>
-                    <input type="tel" id="alternate_after_hours" name="alternate_after_hours" placeholder="(123) 123-1234" oninput="formatPhoneNumber(this)" value="{{ request.form.alternate_after_hours }}">
-                </div>
+                
+                <div id="contact-fields"></div>
             </fieldset>
         </section>     
 
@@ -98,6 +51,25 @@
                     <label for="room_number">Room Number:</label>
                     <input type="text" id="room_number" name="room_number" placeholder="Enter room number" value="{{ request.form.room_number }}">
                 </div>
+            </fieldset>
+        </section>
+
+        <section>
+            <fieldset class="orientation_fieldset">
+                <legend>Sign Orientation</legend>
+
+                <p>In what orientation are the sign holders?</p>
+
+                <div class="orientation-options">
+                    <input type="radio" id="horizontal" name="orientation" value="horizontal" {{ 'checked' if request.form.get('orientation') == 'horizontal' else '' }}>
+                    <label for="horizontal" class="horizontal-label">Horizontal (▭)</label>
+                </div>
+
+                <div class="orientation-options">
+                    <input type="radio" id="vertical" name="orientation" value="vertical" {{ 'checked' if request.form.get('orientation') == 'vertical' else '' }}>
+                    <label for="vertical" class="vertical-label">Vertical (▯)</label>
+                </div>
+
             </fieldset>
         </section>
 
@@ -513,17 +485,6 @@
         
                 <div id="signFieldsYes" class="multi-sign-follow-up" style="display: none;">
                     <div class="multi-sign-grid-item">
-                        <p>In what orientation are the sign holders?</p>
-                        <div class="orientation-options">
-                            <input type="radio" id="horizontal" name="orientation" value="horizontal" {{ 'checked' if request.form.get('orientation') == 'horizontal' else '' }}>
-                            <label for="horizontal" class="horizontal-label">Horizontal (▭)</label>
-                        </div>
-                        <div class="orientation-options">
-                            <input type="radio" id="vertical" name="orientation" value="vertical" {{ 'checked' if request.form.get('orientation') == 'vertical' else '' }}>
-                            <label for="vertical" class="vertical-label">Vertical (▯)</label>
-                        </div>
-                    </div>
-                    <div class="multi-sign-grid-item">
                         <p>How many signs do you need? (If lab bay, count sign holders on both sides of the bay.)</p>
                         <input type="number" id="num_signs" name="num_signs" value="{{ request.form.num_signs }}">
                     </div>
@@ -531,42 +492,14 @@
         
                 <div id="signFieldsNo" class="multi-sign-follow-up" style="display: none;">
                     <div class="multi-sign-grid-item">
-                        <p>How many entrances does the room or bay have? (Four entrances for a full lab bay. Two entrances for a half bay.)<p>
+                        <p>How many entrances does the room or bay have? (Four entrances for a full lab bay. Two entrances for a half bay.)</p>
                         <input type="number" id="num_entrances" name="num_entrances" value="{{ request.form.num_entrances }}">
                     </div>
                 </div>
             </fieldset>
         </section>
-        
-        <section>
-            <fieldset class="shared-space-fieldset">
-                <legend>Shared Spaces</legend>
-                
-                <p>Is this room shared between multiple labs?</p>
-                <div class="shared-space-question">
-                    <div class="shared-space-option">
-                        <input type="radio" id="shared_yes" name="shared" value="yes">
-                        <label for="shared_yes">Yes</label>
-                    </div>
-                    <div class="shared-space-option">
-                        <input type="radio" id="shared_no" name="shared" value="no" checked>
-                        <label for="shared_no">No</label>
-                    </div>
-                </div>
-                
-                <p id="customSignMessage" style="display: none;">
-                    List additional names and contact numbers to include on the sign:
-                </p>
-                <textarea id="additionalInfo" name="additionalInfo" rows="4" cols="50" style="display: none;"></textarea>
-                <p id="submitMessage" style="display: none;">
-                    Submit the form, and we will create a custom sign for you.
-                </p>
-        
-            </fieldset>
-        </section>
-        
-
         <input type="submit" value="Submit Sign Form" class="submit-button">
+        <button type="button" class="submit-button" onclick="clearSavedForm()">Clear Form / Start New Sign</button>
     </form>
     
     <script>
@@ -626,73 +559,278 @@
             }
         }
     
-        // Function to toggle the visibility of custom sign message for shared spaces
-        function toggleCustomSignMessage() {
-            var yesOption = document.getElementById('shared_yes');
-            var message = document.getElementById('customSignMessage');
-            var textarea = document.getElementById('additionalInfo');
-            var submitMessage = document.getElementById('submitMessage');
-    
-            // Show or hide the custom sign message based on "shared" option
-            if (yesOption.checked) {
-                message.style.display = 'block';
-                textarea.style.display = 'block';
-                submitMessage.style.display = 'block';
-            } else {
-                message.style.display = 'none';
-                textarea.style.display = 'none';
-                submitMessage.style.display = 'none';
-            }
+// Save all current form fields in this browser tab
+function saveFormState() {
+    var form = document.forms['form1'];
+    var savedState = {};
+
+    if (!form) {
+        return;
+    }
+
+    form.querySelectorAll('input, select, textarea').forEach(function(field) {
+
+        if (!field.id || field.type === 'submit' || field.type === 'button') {
+            return;
         }
-    
+
+        if (field.type === 'checkbox' || field.type === 'radio') {
+            savedState[field.id] = {
+                type: field.type,
+                checked: field.checked
+            };
+        } else {
+            savedState[field.id] = {
+                type: field.type,
+                value: field.value
+            };
+        }
+    });
+
+    sessionStorage.setItem('labSignFormState', JSON.stringify(savedState));
+}
+
+
+// Restore the previously entered form fields
+function restoreFormState() {
+    var saved = sessionStorage.getItem('labSignFormState');
+
+    if (!saved) {
+        updateContactFields();
+        toggleBiologicalSections();
+        toggleSignFields();
+        return;
+    }
+
+    var savedState;
+
+    try {
+        savedState = JSON.parse(saved);
+    } catch (error) {
+        sessionStorage.removeItem('labSignFormState');
+        updateContactFields();
+        toggleBiologicalSections();
+        toggleSignFields();
+        return;
+    }
+
+
+    // Restore PI count first so the correct dynamic contact fields are created.
+    if (savedState.num_pis && savedState.num_pis.value) {
+        document.getElementById('num_pis').value = savedState.num_pis.value;
+    }
+
+    updateContactFields();
+
+
+    // Restore all saved fields, including the dynamic PI/contact fields.
+    Object.keys(savedState).forEach(function(id) {
+        var field = document.getElementById(id);
+
+        if (!field) {
+            return;
+        }
+
+        var state = savedState[id];
+
+        if (state.type === 'checkbox' || state.type === 'radio') {
+            field.checked = state.checked;
+        } else {
+            field.value = state.value || '';
+        }
+    });
+
+
+    // Re-display conditional sections based on restored selections.
+    toggleBiologicalSections();
+    toggleSignFields();
+
+    var otherCheckbox = document.getElementById('other');
+    if (otherCheckbox) {
+        toggleOtherTextBox(otherCheckbox);
+    }
+}
+
+
+// Clear saved data and return the form to a fresh state
+function clearSavedForm() {
+    sessionStorage.removeItem('labSignFormState');
+
+    var form = document.forms['form1'];
+
+    if (!form) {
+        return;
+    }
+
+    form.reset();
+
+    document.getElementById('num_pis').value = '1';
+
+    updateContactFields();
+    toggleBiologicalSections();
+    toggleSignFields();
+
+    var otherCheckbox = document.getElementById('other');
+    if (otherCheckbox) {
+        toggleOtherTextBox(otherCheckbox);
+    }
+
+    window.scrollTo(0, 0);
+}
+
+
+// Function to create PI and Primary Contact fields based on the number of PIs
+function updateContactFields() {
+    var numPIs = parseInt(document.getElementById('num_pis').value);
+    var contactFields = document.getElementById('contact-fields');
+
+    contactFields.innerHTML = '';
+
+    for (var i = 1; i <= numPIs; i++) {
+
+        // Principal Investigator
+        contactFields.innerHTML += `
+            <fieldset class="individual-contact-fieldset">
+                <legend>Principal Investigator ${i}</legend>
+
+                <div class="form-row">
+                    <label for="PI_first_name_${i}">First name:</label>
+                    <input type="text"
+                           id="PI_first_name_${i}"
+                           name="PI_first_name_${i}"
+                           placeholder="Enter first name"
+                           required>
+                </div>
+
+                <div class="form-row">
+                    <label for="PI_last_name_${i}">Last name:</label>
+                    <input type="text"
+                           id="PI_last_name_${i}"
+                           name="PI_last_name_${i}"
+                           placeholder="Enter last name"
+                           required>
+                </div>
+
+                <div class="form-row">
+                    <label for="PI_phone_${i}">After-hours phone:</label>
+                    <input type="tel"
+                           id="PI_phone_${i}"
+                           name="PI_phone_${i}"
+                           placeholder="(123) 123-1234"
+                           oninput="formatPhoneNumber(this)"
+                           required>
+                </div>
+            </fieldset>
+
+            <!-- Primary Contact -->
+            <fieldset class="individual-contact-fieldset">
+                <legend>Primary Contact ${i}</legend>
+
+                <div class="form-row">
+                    <label for="primary_first_name_${i}">First name:</label>
+                    <input type="text"
+                           id="primary_first_name_${i}"
+                           name="primary_first_name_${i}"
+                           placeholder="Enter first name"
+                           required>
+                </div>
+
+                <div class="form-row">
+                    <label for="primary_last_name_${i}">Last name:</label>
+                    <input type="text"
+                           id="primary_last_name_${i}"
+                           name="primary_last_name_${i}"
+                           placeholder="Enter last name"
+                           required>
+                </div>
+
+                <div class="form-row">
+                    <label for="primary_phone_${i}">After-hours phone:</label>
+                    <input type="tel"
+                           id="primary_phone_${i}"
+                           name="primary_phone_${i}"
+                           placeholder="(123) 123-1234"
+                           oninput="formatPhoneNumber(this)"
+                           required>
+                </div>
+            </fieldset>
+        `;
+
+        // Add Alternate Contact only when there is exactly one PI
+        if (numPIs === 1) {
+            contactFields.innerHTML += `
+                <fieldset class="individual-contact-fieldset">
+                    <legend>Alternate Contact (optional)</legend>
+
+                    <div class="form-row">
+                        <label for="alternate_first_name">First name:</label>
+                        <input type="text"
+                               id="alternate_first_name"
+                               name="alternate_first_name"
+                               placeholder="Enter first name">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="alternate_last_name">Last name:</label>
+                        <input type="text"
+                               id="alternate_last_name"
+                               name="alternate_last_name"
+                               placeholder="Enter last name">
+                    </div>
+
+                    <div class="form-row">
+                        <label for="alternate_phone">After-hours phone:</label>
+                        <input type="tel"
+                               id="alternate_phone"
+                               name="alternate_phone"
+                               placeholder="(123) 123-1234"
+                               oninput="formatPhoneNumber(this)">
+                    </div>
+                </fieldset>
+            `;
+        }
+    }
+}
+
         document.addEventListener('DOMContentLoaded', function() {
-            // Add event listeners for phone inputs to format phone numbers
-            document.getElementById('PI_phone').addEventListener('input', function() {
-                formatPhoneNumber(this);
-            });
-    
-            document.getElementById('PI_after_hours').addEventListener('input', function() {
-                formatPhoneNumber(this);
-            });
-    
-            document.getElementById('primary_phone').addEventListener('input', function() {
-                formatPhoneNumber(this);
-            });
-    
-            document.getElementById('primary_after_hours').addEventListener('input', function() {
-                formatPhoneNumber(this);
-            });
-    
-            document.getElementById('alternate_phone').addEventListener('input', function() {
-                formatPhoneNumber(this);
-            });
-    
-            document.getElementById('alternate_after_hours').addEventListener('input', function() {
-                formatPhoneNumber(this);
-            });
-    
+            var form = document.forms['form1'];
+
             // Add event listeners for toggleable sections
             document.getElementById('biohazard').addEventListener('change', toggleBiologicalSections);
-            document.getElementById('shared_yes').addEventListener('change', toggleCustomSignMessage);
-            document.getElementById('shared_no').addEventListener('change', toggleCustomSignMessage);
             document.getElementById('signs_yes').addEventListener('change', toggleSignFields);
             document.getElementById('signs_no').addEventListener('change', toggleSignFields);
-    
-            // Call functions on page load to handle pre-checked states
-            toggleSignFields();  // Ensure sign fields are displayed correctly on page load
-            toggleCustomSignMessage();  // Ensure shared room message is handled correctly on page load
-            toggleBiologicalSections();  // Ensure biological sections are displayed if biohazard is checked
-    
+
+            // Restore the previous sign information, if any.
+            restoreFormState();
+
+            // Save changes continuously as the form is edited.
+            form.addEventListener('input', saveFormState);
+            form.addEventListener('change', saveFormState);
+
+            // Make absolutely sure the latest values are stored before submission.
+            form.addEventListener('submit', saveFormState);
+
             // Handle error messages on page load
             var errorMessage = "{{ error_message }}";
             if (errorMessage) {
                 alert(errorMessage);
                 highlightErrorFields();
             }
-    
-            // Set placeholder text for additional info textarea
-            var textarea = document.getElementById('additionalInfo');
-            textarea.placeholder = "Additional PI: Alice Smith (555) 123-4567\nAlternate contact: Bob Johnson (555) 987-6543";
+        });
+
+
+        // Save once more when leaving the form page.
+        window.addEventListener('pagehide', function() {
+            saveFormState();
+        });
+
+
+        // If the browser restores this page from its back/forward cache,
+        // restore the saved state again.
+        window.addEventListener('pageshow', function(event) {
+            if (event.persisted) {
+                restoreFormState();
+            }
         });
     </script>
     

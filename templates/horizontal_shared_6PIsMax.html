@@ -7,7 +7,7 @@
     <title>Lab Sign Template</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/verticalstyle.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/horizontalstyle_shared_6PIsMax.css') }}">
 </head>
 
 <body>
@@ -68,25 +68,42 @@
 
             <div class="contact-table">
 
-                <div class="contact-column">
 
-                    {% for contact in contacts %}
+                <!-- =========================
+                PI 1-3
+                ========================= -->
 
-                    <div class="contact-entry">
+                <div class="contact-column contact-column-left">
 
-                        <span class="contact-label">
-                            {{ contact.label }}:
-                        </span>
+                    {% for contact in contacts[:6] %}
 
-                        <span class="contact-value">
-                            {{ contact.name }}, {{ contact.phone }}
-                        </span>
-
+                    <div>
+                        <span class="contact-label">{{ contact.label }}:</span>
+                        <span class="contact-value">{{ contact.name }}, {{ contact.phone }}</span>
                     </div>
 
                     {% endfor %}
 
                 </div>
+
+
+                <!-- =========================
+                PI 4-6
+                ========================= -->
+
+                <div class="contact-column contact-column-right">
+
+                    {% for contact in contacts[6:] %}
+
+                    <div>
+                        <span class="contact-label">{{ contact.label }}:</span>
+                        <span class="contact-value">{{ contact.name }}, {{ contact.phone }}</span>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
 
             </div>
 
@@ -107,66 +124,55 @@
             <div class="footer-meta">
 
                 <div class="meta-item">
-
-                    <span class="meta-label">
-                        Department:
-                    </span>
-
-                    <span class="meta-value">
-                        {{ department }}
-                    </span>
-
+                    <span class="meta-label">Department:</span>
+                    <span class="meta-value">{{ department }}</span>
                 </div>
 
 
                 <div class="meta-item">
-
-                    <span class="meta-label">
-                        Date Updated:
-                    </span>
-
-                    <span class="meta-value">
-                        {{ date_updated }}
-                    </span>
-
+                    <span class="meta-label">Date Updated:</span>
+                    <span class="meta-value">{{ date_updated }}</span>
                 </div>
 
             </div>
 
 
             <!-- =========================
-            PPE WARNING
+            WARNING + EMERGENCY + EHS
             ========================= -->
 
-            <div class="warning">
-
-                <div class="warning-text">
-                    PPE REQUIRED AT ALL TIMES (LAB COAT, EYE PROTECTION, CLOSED-TOE SHOES, LONG PANTS). EATING &amp; DRINKING ARE PROHIBITED IN LAB AREAS.
-                </div>
-
-            </div>
+            <div class="footer-main">
 
 
-            <!-- =========================
-            EMERGENCY + EHS
-            ========================= -->
+                <div class="warning">
 
-            <div class="footer-emergency">
-
-                <div class="emergency-box">
-
-                    <div class="emergency-text">
-                        EMERGENCY: 911
+                    <div class="warning-text">
+                        PPE REQUIRED AT ALL TIMES (LAB COAT, EYE PROTECTION, CLOSED-TOE SHOES, LONG PANTS). EATING &amp; DRINKING ARE PROHIBITED IN LAB AREAS.
                     </div>
 
                 </div>
 
 
-                <div class="ehs-box">
+                <div class="footer-emergency">
 
-                    <div class="ehs-text">
-                        EHS: (919) 962-5507
+
+                    <div class="emergency-box">
+
+                        <div class="emergency-text">
+                            EMERGENCY: 911
+                        </div>
+
                     </div>
+
+
+                    <div class="ehs-box">
+
+                        <div class="ehs-text">
+                            EHS: (919) 962-5507
+                        </div>
+
+                    </div>
+
 
                 </div>
 

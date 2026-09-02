@@ -7,56 +7,43 @@
     <title>Lab Sign Template</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/vert_bio_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/horiz_bio_style_shared_6PIsMax.css') }}">
 </head>
 
 <body>
 
 <div class="container">
 
-
-    <!-- =========================
-    HEADER
-    ========================= -->
-
     <div class="header">
         LABORATORY HAZARD INFORMATION
     </div>
 
 
-    <!-- =========================
-    HAZARD ICONS
-    ========================= -->
+    <!-- ONE ROW OF FIVE HAZARDS -->
 
     <div class="hazard-icons">
 
-        {% for icon in hazard_icons %}
+        {% for icon in hazard_icons[:5] %}
+
         <div>
             <img src="{{ icon }}" alt="Hazard Icon">
         </div>
+
         {% endfor %}
 
     </div>
 
-
-    <!-- =========================
-    ROOM + BUILDING
-    ========================= -->
 
     <div class="room-building">
         <p>{{ room }} {{ building }}</p>
     </div>
 
 
-    <!-- =========================
-    BOTTOM STACK
-    ========================= -->
-
     <div class="bottom-stack">
 
 
         <!-- =========================
-        EMERGENCY CONTACT SECTION
+        CONTACTS
         ========================= -->
 
         <div class="contact-section">
@@ -68,25 +55,34 @@
 
             <div class="contact-table">
 
-                <div class="contact-column">
 
-                    {% for contact in contacts %}
+                <div class="contact-column contact-column-left">
 
-                    <div class="contact-entry">
+                    {% for contact in contacts[:6] %}
 
-                        <span class="contact-label">
-                            {{ contact.label }}:
-                        </span>
-
-                        <span class="contact-value">
-                            {{ contact.name }}, {{ contact.phone }}
-                        </span>
-
+                    <div>
+                        <span class="contact-label">{{ contact.label }}:</span>
+                        <span class="contact-value">{{ contact.name }}, {{ contact.phone }}</span>
                     </div>
 
                     {% endfor %}
 
                 </div>
+
+
+                <div class="contact-column contact-column-right">
+
+                    {% for contact in contacts[6:] %}
+
+                    <div>
+                        <span class="contact-label">{{ contact.label }}:</span>
+                        <span class="contact-value">{{ contact.name }}, {{ contact.phone }}</span>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
 
             </div>
 
@@ -94,7 +90,7 @@
 
 
         <!-- =========================
-        BIOSAFETY SECTION
+        BIOSAFETY
         ========================= -->
 
         <div class="bio-section">
@@ -107,12 +103,7 @@
             <div class="bio-table">
 
 
-                <!-- =========================
-                BSL + OCCUPATIONAL HEALTH
-                ========================= -->
-
                 <div class="bio-top-row">
-
 
                     <div class="bio-bsl">
 
@@ -135,13 +126,8 @@
 
                     </div>
 
-
                 </div>
 
-
-                <!-- =========================
-                BIOLOGICAL AGENTS
-                ========================= -->
 
                 <div class="bio-agents">
 
@@ -155,7 +141,6 @@
 
                 </div>
 
-
             </div>
 
         </div>
@@ -167,73 +152,49 @@
 
         <div class="footer">
 
-
-            <!-- =========================
-            DEPARTMENT + DATE UPDATED
-            ========================= -->
-
             <div class="footer-meta">
 
                 <div class="meta-item">
-
-                    <span class="meta-label">
-                        Department:
-                    </span>
-
-                    <span class="meta-value">
-                        {{ department }}
-                    </span>
-
+                    <span class="meta-label">Department:</span>
+                    <span class="meta-value">{{ department }}</span>
                 </div>
-
 
                 <div class="meta-item">
-
-                    <span class="meta-label">
-                        Date Updated:
-                    </span>
-
-                    <span class="meta-value">
-                        {{ date_updated }}
-                    </span>
-
+                    <span class="meta-label">Date Updated:</span>
+                    <span class="meta-value">{{ date_updated }}</span>
                 </div>
 
             </div>
 
 
-            <!-- =========================
-            PPE WARNING
-            ========================= -->
+            <div class="footer-main">
 
-            <div class="warning">
+                <div class="warning">
 
-                <div class="warning-text">
-                    PPE REQUIRED AT ALL TIMES (LAB COAT, EYE PROTECTION, CLOSED-TOE SHOES, LONG PANTS). EATING &amp; DRINKING ARE PROHIBITED IN LAB AREAS.
-                </div>
-
-            </div>
-
-
-            <!-- =========================
-            EMERGENCY + EHS
-            ========================= -->
-
-            <div class="footer-emergency">
-
-                <div class="emergency-box">
-
-                    <div class="emergency-text">
-                        EMERGENCY: 911
+                    <div class="warning-text">
+                        PPE REQUIRED AT ALL TIMES (LAB COAT, EYE PROTECTION, CLOSED-TOE SHOES, LONG PANTS). EATING &amp; DRINKING ARE PROHIBITED IN LAB AREAS.
                     </div>
 
                 </div>
 
 
-                <div class="ehs-box">
+                <div class="footer-emergency">
 
-                    <div class="ehs-text">
-                        EHS: (919) 962-5507
+                    <div class="emergency-box">
+
+                        <div class="emergency-text">
+                            EMERGENCY: 911
+                        </div>
+
+                    </div>
+
+
+                    <div class="ehs-box">
+
+                        <div class="ehs-text">
+                            EHS: (919) 962-5507
+                        </div>
+
                     </div>
 
                 </div>

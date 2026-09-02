@@ -3,17 +3,22 @@
     margin: 0in;
 }
 
+
 body {
     width: 11in;
     height: 8.5in;
+
     margin: 0;
     padding: 0;
+
     background-color: transparent;
 }
+
 
 .container {
     width: 11in;
     height: 8.5in;
+
     position: relative;
 }
 
@@ -24,11 +29,15 @@ HEADER
 
 .header {
     color: #B50000;
+
     text-align: center;
+
     font-family: 'Open Sans';
+
     font-size: 48px;
     font-style: normal;
     font-weight: 700;
+
     line-height: normal;
 
     display: flex;
@@ -37,6 +46,7 @@ HEADER
     height: 88px;
 
     flex-direction: row;
+
     justify-content: center;
     align-items: center;
 
@@ -49,19 +59,18 @@ HEADER
 
 
 /* =========================
-HAZARD ICONS
+ONE ROW OF SEVEN HAZARDS
 ========================= */
 
 .hazard-icons {
     display: flex;
-    flex-wrap: wrap;
 
-    gap: 1%;
+    flex-wrap: nowrap;
 
     justify-content: space-between;
 
     width: 10in;
-    height: 4in;
+    height: 130px;
 
     position: absolute;
 
@@ -69,9 +78,10 @@ HAZARD ICONS
     left: 0.5in;
 }
 
+
 .hazard-icons div {
-    width: 178px;
-    height: 178px;
+    width: 130px;
+    height: 130px;
 
     flex-shrink: 0;
 
@@ -79,6 +89,7 @@ HAZARD ICONS
 
     background: #E9E9E9;
 }
+
 
 .hazard-icons img {
     width: 100%;
@@ -93,7 +104,7 @@ ROOM + BUILDING
 ========================= */
 
 .room-building {
-    color: #000;
+    color: #000000;
 
     font-family: 'Open Sans';
 
@@ -107,7 +118,7 @@ ROOM + BUILDING
 
     position: absolute;
 
-    top: 4.30in;
+    top: 2.15in;
     left: 50%;
 
     transform: translateX(-50%);
@@ -128,12 +139,9 @@ ROOM + BUILDING
 /* =========================================================
 BOTTOM STACK
 
-Only this element is anchored to the bottom of the page.
+Everything below the room/building is part of one stack.
 
-Everything inside follows normal document flow:
-
-ECI
-CONTACT BOX
+CONTACT / BIOSAFETY
 DEPARTMENT / DATE
 WARNING / 911 / EHS
 ========================================================= */
@@ -153,11 +161,11 @@ WARNING / 911 / EHS
 }
 
 
-/* =========================
-CONTACT SECTION
-========================= */
+/* =========================================================
+CONTACT + BIOSAFETY SECTION
+========================================================= */
 
-.contact-section {
+.info-section {
     width: 10.5in;
 
     margin: 0;
@@ -168,25 +176,63 @@ CONTACT SECTION
 
 
 /* =========================
-EMERGENCY CONTACT HEADER
+INFORMATION HEADERS
 ========================= */
 
+.info-header-row {
+    width: 10.5in;
+
+    display: table;
+    table-layout: fixed;
+
+    margin: 0 0 4px 0;
+    padding: 0;
+
+    box-sizing: border-box;
+}
+
+
 .contact-header {
+    display: table-cell;
+
+    width: 50%;
+
     color: #B50000;
 
-    text-align: center;
+    text-align: left;
 
     font-family: 'Open Sans';
 
-    font-size: 30px;
+    font-size: 26px;
     font-weight: 700;
 
     line-height: 1;
 
-    width: 100%;
+    padding-left: 0.15in;
 
-    margin: 0 0 4px 0;
-    padding: 0;
+    white-space: nowrap;
+
+    box-sizing: border-box;
+}
+
+
+.bio-header {
+    display: table-cell;
+
+    width: 50%;
+
+    color: #B50000;
+
+    text-align: right;
+
+    font-family: 'Open Sans';
+
+    font-size: 26px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    padding-right: 0.15in;
 
     white-space: nowrap;
 
@@ -195,45 +241,51 @@ EMERGENCY CONTACT HEADER
 
 
 /* =========================
-CONTACT TABLE
+INFORMATION TABLE
 ========================= */
 
-.contact-table {
+.info-table {
     width: 10.5in;
+
+    display: table;
+
+    table-layout: fixed;
 
     background-color: #FFFFFF;
 
     border: 3px solid #56A0D3;
 
-    font-family: 'Open Sans';
-
     margin: 0;
     padding: 0;
 
     box-sizing: border-box;
+
+    font-family: 'Open Sans';
 }
 
 
-/* =========================
-CONTACT COLUMN
-========================= */
+/* =========================================================
+CONTACT SIDE
+========================================================= */
 
-.contact-column {
-    width: 100%;
+.contact-panel {
+    display: table-cell;
+
+    width: 50%;
+
+    vertical-align: top;
 
     padding: 10px 18px;
-
-    margin: 0;
 
     box-sizing: border-box;
 }
 
 
 /* =========================
-INDIVIDUAL CONTACT ENTRIES
+CONTACT ENTRY
 ========================= */
 
-.contact-column > div {
+.contact-entry {
     width: 100%;
 
     font-size: 12pt;
@@ -254,6 +306,8 @@ CONTACT LABEL
 ========================= */
 
 .contact-label {
+    font-size: 9.5pt;
+
     font-weight: 400;
 
     color: #000000;
@@ -261,10 +315,173 @@ CONTACT LABEL
 
 
 /* =========================
-CONTACT NAME + PHONE
+CONTACT VALUE
 ========================= */
 
-.contact-column span:not(.contact-label) {
+.contact-value {
+    font-size: 10pt;
+
+    font-weight: 700;
+
+    color: #00467F;
+}
+
+
+/* =========================================================
+BIOSAFETY SIDE
+========================================================= */
+
+.bio-panel {
+    display: table-cell;
+
+    width: 50%;
+
+    vertical-align: top;
+
+    border-left: 3px solid #56A0D3;
+
+    padding: 10px 18px;
+
+    box-sizing: border-box;
+
+    font-family: 'Open Sans';
+}
+
+
+/* =========================================================
+BSL + OCCUPATIONAL HEALTH ROW
+========================================================= */
+
+.bio-top-row {
+    width: 100%;
+
+    display: table;
+
+    table-layout: fixed;
+
+    margin: 0 0 7px 0;
+    padding: 0;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================
+BIOSAFETY LEVEL SIDE
+========================= */
+
+.bio-bsl {
+    display: table-cell;
+
+    width: 1.65in;
+
+    vertical-align: middle;
+
+    padding: 0 10px 0 0;
+
+    box-sizing: border-box;
+
+    font-size: 10.5pt;
+    line-height: 18px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+BIOSAFETY LEVEL TEXT
+========================= */
+
+.bio-bsl-text {
+    font-size: 14pt;
+
+    font-weight: 700;
+
+    color: #B50000;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+OCCUPATIONAL HEALTH SIDE
+========================= */
+
+.bio-occ {
+    display: table-cell;
+
+    vertical-align: middle;
+
+    border-left: 3px solid #56A0D3;
+
+    padding: 0 0 0 12px;
+
+    box-sizing: border-box;
+
+    font-size: 10pt;
+    line-height: 15px;
+}
+
+
+/* Occupational Health label always stays on top line */
+
+.bio-occ .bio-label {
+    display: block;
+
+    font-weight: 400;
+
+    color: #000000;
+
+    white-space: nowrap;
+}
+
+
+/* Occupational Health value always starts on bottom line */
+
+.bio-occ .bio-value {
+    display: block;
+
+    font-weight: 700;
+
+    color: #00467F;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+BIOLOGICAL AGENTS
+========================= */
+
+.bio-agents {
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    font-size: 11pt;
+    line-height: 18px;
+}
+
+
+/* =========================
+BIOSAFETY LABELS
+========================= */
+
+.bio-label {
+    font-weight: 400;
+
+    color: #000000;
+}
+
+
+/* =========================
+BIOSAFETY VALUES
+========================= */
+
+.bio-value {
     font-weight: 700;
 
     color: #00467F;
@@ -273,11 +490,6 @@ CONTACT NAME + PHONE
 
 /* =========================================================
 FOOTER
-
-The footer now contains TWO rows:
-
-1. Department / Date Updated
-2. Warning / 911 / EHS
 ========================================================= */
 
 .footer {
@@ -294,17 +506,12 @@ The footer now contains TWO rows:
 DEPARTMENT + DATE UPDATED
 ========================= */
 
-/*
-Using table/table-cell instead of flex here
-because WeasyPrint handles fixed-height table
-cells very reliably.
-*/
-
 .footer-meta {
     width: 10.5in;
     height: 0.36in;
 
     display: table;
+
     table-layout: fixed;
 
     background-color: #FFFFFF;
@@ -387,7 +594,9 @@ MAIN FOOTER ROW
     height: 0.55in;
 
     display: flex;
+
     flex-direction: row;
+
     align-items: stretch;
 
     margin: 0;
@@ -408,21 +617,26 @@ PPE WARNING
     flex: none;
 
     background-color: #56A0D3;
+
     border: 1px solid #56A0D3;
 
     box-sizing: border-box;
 
     padding: 2px 10px;
 
-    color: #FFF;
+    color: #FFFFFF;
+
     text-align: center;
+
     font-family: 'Open Sans';
 
     font-size: 15px;
     font-weight: 800;
+
     line-height: 1.10;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 }
@@ -496,16 +710,20 @@ EMERGENCY TEXT
 
 .emergency-text {
     color: #B50000;
+
     font-family: 'Open Sans';
 
     font-size: 20px;
     font-weight: 900;
+
     line-height: 1;
 
     text-align: center;
+
     white-space: nowrap;
 
     position: absolute;
+
     top: 50%;
     left: 50%;
 
@@ -522,16 +740,20 @@ EHS TEXT
 
 .ehs-text {
     color: #B50000;
+
     font-family: 'Open Sans';
 
     font-size: 19px;
     font-weight: 900;
+
     line-height: 1;
 
     text-align: center;
+
     white-space: nowrap;
 
     position: absolute;
+
     top: 50%;
     left: 50%;
 

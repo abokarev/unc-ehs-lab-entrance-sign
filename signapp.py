@@ -1,5 +1,4 @@
-import os
-from flask import Flask, render_template, request, make_response, url_for
+from flask import Flask, render_template, request, make_response
 from datetime import datetime
 from weasyprint import HTML, CSS
 
@@ -90,44 +89,68 @@ def home():
 def submit():
     error_message = None
 
-    # Extract form data for contacts
-    PI_first_name = request.form.get('PI_first_name')
-    PI_last_name = request.form.get('PI_last_name')
-    PI_emergency_phone = request.form.get('PI_phone')  
-    PI_regular_phone = request.form.get('PI_after_hours') 
+    # Extract number of PIs
+    num_pis = int(request.form.get('num_pis', 1))
 
-    primary_first_name = request.form.get('primary_first_name')
-    primary_last_name = request.form.get('primary_last_name')
-    primary_emergency_phone = request.form.get('primary_after_hours')
-    primary_regular_phone = request.form.get('primary_phone')
+    # Store contacts in the exact order they should appear on the sign
+    contacts = []
 
-    alternate_first_name = request.form.get('alternate_first_name')
-    alternate_last_name = request.form.get('alternate_last_name')
-    alternate_emergency_phone = request.form.get('alternate_phone')  
-    alternate_regular_phone = request.form.get('alternate_after_hours')  
-
-    # Initialize a set to track unique phone numbers
+    # Track unique phone numbers
     unique_phones = set()
 
-    # Assign phone numbers, prioritizing emergency phones
-    primary_phone_output = primary_emergency_phone
-    unique_phones.add(primary_emergency_phone)
+    # Extract PI and Primary Contact information
+    for i in range(1, num_pis + 1):
 
-    if PI_emergency_phone and PI_emergency_phone not in unique_phones:
-        PI_phone_output = PI_emergency_phone
-        unique_phones.add(PI_emergency_phone)
-    else:
-        PI_phone_output = PI_regular_phone
-        if PI_regular_phone:
-            unique_phones.add(PI_regular_phone)
+        # Principal Investigator
+        pi_first_name = request.form.get(f'PI_first_name_{i}', '').strip()
+        pi_last_name = request.form.get(f'PI_last_name_{i}', '').strip()
+        pi_phone = request.form.get(f'PI_phone_{i}', '').strip()
 
-    if alternate_emergency_phone and alternate_emergency_phone not in unique_phones:
-        alternate_phone_output = alternate_emergency_phone
-        unique_phones.add(alternate_emergency_phone)
-    else:
-        alternate_phone_output = alternate_regular_phone
-        if alternate_regular_phone:
-            unique_phones.add(alternate_regular_phone)
+        contacts.append({
+            'type': 'PI',
+            'label': 'Principal Investigator' if num_pis == 1 else f'Principal Investigator {i}',
+            'name': f'{pi_first_name} {pi_last_name}'.strip(),
+            'phone': pi_phone
+        })
+
+        if pi_phone:
+            unique_phones.add(pi_phone)
+
+        # Primary Contact
+        primary_first_name = request.form.get(f'primary_first_name_{i}', '').strip()
+        primary_last_name = request.form.get(f'primary_last_name_{i}', '').strip()
+        primary_phone = request.form.get(f'primary_phone_{i}', '').strip()
+
+        contacts.append({
+            'type': 'Primary',
+            'label': 'Primary Contact' if num_pis == 1 else f'Primary Contact {i}',
+            'name': f'{primary_first_name} {primary_last_name}'.strip(),
+            'phone': primary_phone
+        })
+
+        if primary_phone:
+            unique_phones.add(primary_phone)
+
+
+    # Alternate Contact only exists when there is exactly one PI
+    if num_pis == 1:
+
+        alternate_first_name = request.form.get('alternate_first_name', '').strip()
+        alternate_last_name = request.form.get('alternate_last_name', '').strip()
+        alternate_phone = request.form.get('alternate_phone', '').strip()
+
+        # Only add Alternate Contact if something was entered
+        if alternate_first_name or alternate_last_name or alternate_phone:
+            contacts.append({
+                'type': 'Alternate',
+                'label': 'Alternate Contact',
+                'name': f'{alternate_first_name} {alternate_last_name}'.strip(),
+                'phone': alternate_phone
+            })
+
+            if alternate_phone:
+                unique_phones.add(alternate_phone)
+
 
     # Validate at least two unique contact numbers
     if len(unique_phones) < 2:
@@ -165,6 +188,10 @@ def submit():
         if hazard in request.form
     ]
 
+    # Save the real number of selected hazards before adding empty placeholders.
+    # Shared bio signs with 6-7 hazards use the compact seven-icon layout.
+    selected_hazard_count = len(selected_hazards)
+
     # Ensure there are 10 icons, filling with EMPTY.png if necessary
     while len(selected_hazards) < 10:
         selected_hazards.append(f'{request.host_url}static/images/00EMPTY.png')
@@ -184,12 +211,8 @@ def submit():
     context = {
         'room': room_number,
         'building': building,
-        'primary_contact': f"{primary_first_name} {primary_last_name}",
-        'primary_phone': primary_phone_output,
-        'alternate_contact': f"{alternate_first_name} {alternate_last_name}",
-        'alternate_phone': alternate_phone_output,
-        'PI_contact': f"{PI_first_name} {PI_last_name}",
-        'PI_phone': PI_phone_output,
+        'num_pis': num_pis,
+        'contacts': contacts,
         'department': department,
         'date_updated': datetime.today().strftime('%m/%d/%Y'),
         'hazard_icons': selected_hazards
@@ -341,19 +364,103 @@ def submit():
         })
     
 
-    # Render the appropriate template based on orientation and biohazard selection
+    # Render the appropriate template based on:
+    # - orientation
+    # - biohazard selection
+    # - number of PIs
+
     orientation = request.form.get('orientation', 'horizontal')
 
+    # Compact seven-icon layout is used only for shared bio signs
+    # with 6 or 7 actual selected hazards.
+    use_7_icon_shared_bio = (
+        num_pis > 1
+        and 6 <= selected_hazard_count <= 7
+    )
+
+    # =========================
+    # BIOHAZARD SIGNS
+    # =========================
+
     if biohazard_selected:
+
+        # Vertical bio
         if orientation == 'vertical':
-            template = 'vert_bio.html'  # Use vertical biohazard template
+
+            # Solo PI
+            if num_pis == 1:
+                template = 'vert_bio.html'
+
+            # Shared space: 2-3 PIs
+            elif num_pis <= 3:
+                if use_7_icon_shared_bio:
+                    template = 'vert_bio_shared_3PIsMax_7icons.html'
+                else:
+                    template = 'vert_bio_shared_3PIsMax.html'
+
+            # Shared space: 4-6 PIs
+            else:
+                if use_7_icon_shared_bio:
+                    template = 'vert_bio_shared_6PIsMax_7icons.html'
+                else:
+                    template = 'vert_bio_shared_6PIsMax.html'
+
+        # Horizontal bio
         else:
-            template = 'horiz_bio.html'  # Use horizontal biohazard template
+
+            # Solo PI
+            if num_pis == 1:
+                template = 'horiz_bio.html'
+
+            # Shared space: 2-3 PIs
+            elif num_pis <= 3:
+                if use_7_icon_shared_bio:
+                    template = 'horiz_bio_shared_3PIsMax_7icons.html'
+                else:
+                    template = 'horiz_bio_shared_3PIsMax.html'
+
+            # Shared space: 4-6 PIs
+            else:
+                if use_7_icon_shared_bio:
+                    template = 'horiz_bio_shared_6PIsMax_7icons.html'
+                else:
+                    template = 'horiz_bio_shared_6PIsMax.html'
+
+    # =========================
+    # NON-BIOHAZARD SIGNS
+    # =========================
+
     else:
+
+        # Vertical non-bio
         if orientation == 'vertical':
-            template = 'vertical.html'  # Use standard vertical template
+
+            # Solo PI
+            if num_pis == 1:
+                template = 'vertical.html'
+
+            # Shared space: 2-3 PIs
+            elif num_pis <= 3:
+                template = 'vertical_shared_3PIsMax.html'
+
+            # Shared space: 4-6 PIs
+            else:
+                template = 'vertical_shared_6PIsMax.html'
+
+        # Horizontal non-bio
         else:
-            template = 'horizontal.html'  # Use standard horizontal template
+
+            # Solo PI
+            if num_pis == 1:
+                template = 'horizontal.html'
+
+            # Shared space: 2-3 PIs
+            elif num_pis <= 3:
+                template = 'horizontal_shared_3PIsMax.html'
+
+            # Shared space: 4-6 PIs
+            else:
+                template = 'horizontal_shared_6PIsMax.html'
 
     html = render_template(template, **context)
 

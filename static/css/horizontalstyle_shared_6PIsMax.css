@@ -3,17 +3,22 @@
     margin: 0in;
 }
 
+
 body {
     width: 11in;
     height: 8.5in;
+
     margin: 0;
     padding: 0;
+
     background-color: transparent;
 }
+
 
 .container {
     width: 11in;
     height: 8.5in;
+
     position: relative;
 }
 
@@ -24,11 +29,15 @@ HEADER
 
 .header {
     color: #B50000;
+
     text-align: center;
+
     font-family: 'Open Sans';
+
     font-size: 48px;
     font-style: normal;
     font-weight: 700;
+
     line-height: normal;
 
     display: flex;
@@ -37,6 +46,7 @@ HEADER
     height: 88px;
 
     flex-direction: row;
+
     justify-content: center;
     align-items: center;
 
@@ -54,6 +64,7 @@ HAZARD ICONS
 
 .hazard-icons {
     display: flex;
+
     flex-wrap: wrap;
 
     gap: 1%;
@@ -69,6 +80,7 @@ HAZARD ICONS
     left: 0.5in;
 }
 
+
 .hazard-icons div {
     width: 178px;
     height: 178px;
@@ -79,6 +91,7 @@ HAZARD ICONS
 
     background: #E9E9E9;
 }
+
 
 .hazard-icons img {
     width: 100%;
@@ -93,7 +106,7 @@ ROOM + BUILDING
 ========================= */
 
 .room-building {
-    color: #000;
+    color: #000000;
 
     font-family: 'Open Sans';
 
@@ -125,18 +138,9 @@ ROOM + BUILDING
 }
 
 
-/* =========================================================
+/* =========================
 BOTTOM STACK
-
-Only this element is anchored to the bottom of the page.
-
-Everything inside follows normal document flow:
-
-ECI
-CONTACT BOX
-DEPARTMENT / DATE
-WARNING / 911 / EHS
-========================================================= */
+========================= */
 
 .bottom-stack {
     position: absolute;
@@ -168,7 +172,7 @@ CONTACT SECTION
 
 
 /* =========================
-EMERGENCY CONTACT HEADER
+CONTACT HEADER
 ========================= */
 
 .contact-header {
@@ -195,11 +199,15 @@ EMERGENCY CONTACT HEADER
 
 
 /* =========================
-CONTACT TABLE
+TWO-COLUMN CONTACT TABLE
 ========================= */
 
 .contact-table {
     width: 10.5in;
+
+    display: table;
+
+    table-layout: fixed;
 
     background-color: #FFFFFF;
 
@@ -215,28 +223,37 @@ CONTACT TABLE
 
 
 /* =========================
-CONTACT COLUMN
+CONTACT COLUMNS
 ========================= */
 
 .contact-column {
-    width: 100%;
+    display: table-cell;
+
+    width: 50%;
+
+    vertical-align: top;
 
     padding: 10px 18px;
-
-    margin: 0;
 
     box-sizing: border-box;
 }
 
 
 /* =========================
-INDIVIDUAL CONTACT ENTRIES
+RIGHT COLUMN DIVIDER
+========================= */
+
+.contact-column-right {
+    border-left: 3px solid #56A0D3;
+}
+
+
+/* =========================
+CONTACT ENTRIES
 ========================= */
 
 .contact-column > div {
     width: 100%;
-
-    font-size: 12pt;
 
     line-height: 18px;
 
@@ -249,36 +266,25 @@ INDIVIDUAL CONTACT ENTRIES
 }
 
 
-/* =========================
-CONTACT LABEL
-========================= */
-
 .contact-label {
+    font-size: 9.5pt;
     font-weight: 400;
 
     color: #000000;
 }
 
 
-/* =========================
-CONTACT NAME + PHONE
-========================= */
-
-.contact-column span:not(.contact-label) {
+.contact-value {
+    font-size: 10pt;
     font-weight: 700;
 
     color: #00467F;
 }
 
 
-/* =========================================================
+/* =========================
 FOOTER
-
-The footer now contains TWO rows:
-
-1. Department / Date Updated
-2. Warning / 911 / EHS
-========================================================= */
+========================= */
 
 .footer {
     width: 10.5in;
@@ -294,17 +300,12 @@ The footer now contains TWO rows:
 DEPARTMENT + DATE UPDATED
 ========================= */
 
-/*
-Using table/table-cell instead of flex here
-because WeasyPrint handles fixed-height table
-cells very reliably.
-*/
-
 .footer-meta {
     width: 10.5in;
     height: 0.36in;
 
     display: table;
+
     table-layout: fixed;
 
     background-color: #FFFFFF;
@@ -321,10 +322,6 @@ cells very reliably.
     padding: 0;
 }
 
-
-/* =========================
-DEPARTMENT / DATE HALVES
-========================= */
 
 .meta-item {
     display: table-cell;
@@ -345,18 +342,10 @@ DEPARTMENT / DATE HALVES
 }
 
 
-/* =========================
-CENTER DIVIDER
-========================= */
-
 .meta-item + .meta-item {
     border-left: 3px solid #56A0D3;
 }
 
-
-/* =========================
-METADATA LABEL
-========================= */
 
 .meta-label {
     font-weight: 400;
@@ -364,10 +353,6 @@ METADATA LABEL
     color: #000000;
 }
 
-
-/* =========================
-METADATA VALUE
-========================= */
 
 .meta-value {
     font-weight: 700;
@@ -387,6 +372,7 @@ MAIN FOOTER ROW
     height: 0.55in;
 
     display: flex;
+
     flex-direction: row;
     align-items: stretch;
 
@@ -408,21 +394,26 @@ PPE WARNING
     flex: none;
 
     background-color: #56A0D3;
+
     border: 1px solid #56A0D3;
 
     box-sizing: border-box;
 
     padding: 2px 10px;
 
-    color: #FFF;
+    color: #FFFFFF;
+
     text-align: center;
+
     font-family: 'Open Sans';
 
     font-size: 15px;
     font-weight: 800;
+
     line-height: 1.10;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 }
@@ -441,16 +432,11 @@ EMERGENCY + EHS
     display: flex;
 
     flex-direction: row;
-
     align-items: stretch;
 
     box-sizing: border-box;
 }
 
-
-/* =========================
-EMERGENCY BOX
-========================= */
 
 .emergency-box {
     width: 2.1in;
@@ -467,10 +453,6 @@ EMERGENCY BOX
     position: relative;
 }
 
-
-/* =========================
-EHS BOX
-========================= */
 
 .ehs-box {
     width: 2.1in;
@@ -490,22 +472,22 @@ EHS BOX
 }
 
 
-/* =========================
-EMERGENCY TEXT
-========================= */
-
 .emergency-text {
     color: #B50000;
+
     font-family: 'Open Sans';
 
     font-size: 20px;
     font-weight: 900;
+
     line-height: 1;
 
     text-align: center;
+
     white-space: nowrap;
 
     position: absolute;
+
     top: 50%;
     left: 50%;
 
@@ -516,22 +498,22 @@ EMERGENCY TEXT
 }
 
 
-/* =========================
-EHS TEXT
-========================= */
-
 .ehs-text {
     color: #B50000;
+
     font-family: 'Open Sans';
 
     font-size: 19px;
     font-weight: 900;
+
     line-height: 1;
 
     text-align: center;
+
     white-space: nowrap;
 
     position: absolute;
+
     top: 50%;
     left: 50%;
 

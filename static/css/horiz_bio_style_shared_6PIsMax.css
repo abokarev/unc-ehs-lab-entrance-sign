@@ -3,17 +3,22 @@
     margin: 0in;
 }
 
+
 body {
     width: 11in;
     height: 8.5in;
+
     margin: 0;
     padding: 0;
+
     background-color: transparent;
 }
+
 
 .container {
     width: 11in;
     height: 8.5in;
+
     position: relative;
 }
 
@@ -24,11 +29,14 @@ HEADER
 
 .header {
     color: #B50000;
+
     text-align: center;
+
     font-family: 'Open Sans';
+
     font-size: 48px;
-    font-style: normal;
     font-weight: 700;
+
     line-height: normal;
 
     display: flex;
@@ -36,38 +44,35 @@ HEADER
     width: 100%;
     height: 88px;
 
-    flex-direction: row;
     justify-content: center;
     align-items: center;
 
-    flex-shrink: 0;
-
-    text-wrap: nowrap;
+    white-space: nowrap;
 
     margin-top: 0;
 }
 
 
 /* =========================
-HAZARD ICONS
+ONE ROW OF FIVE HAZARDS
 ========================= */
 
 .hazard-icons {
     display: flex;
-    flex-wrap: wrap;
 
-    gap: 1%;
+    flex-wrap: nowrap;
 
     justify-content: space-between;
 
     width: 10in;
-    height: 4in;
+    height: 178px;
 
     position: absolute;
 
     top: 0.75in;
     left: 0.5in;
 }
+
 
 .hazard-icons div {
     width: 178px;
@@ -79,6 +84,7 @@ HAZARD ICONS
 
     background: #E9E9E9;
 }
+
 
 .hazard-icons img {
     width: 100%;
@@ -93,7 +99,7 @@ ROOM + BUILDING
 ========================= */
 
 .room-building {
-    color: #000;
+    color: #000000;
 
     font-family: 'Open Sans';
 
@@ -101,19 +107,18 @@ ROOM + BUILDING
     font-weight: 700;
 
     width: 10in;
-    height: 1.25in;
+    height: 1.10in;
 
     text-align: center;
 
     position: absolute;
 
-    top: 4.30in;
+    top: 2.65in;
     left: 50%;
 
     transform: translateX(-50%);
 
     white-space: normal;
-
     word-wrap: break-word;
 
     display: flex;
@@ -121,22 +126,21 @@ ROOM + BUILDING
     justify-content: center;
     align-items: center;
 
-    overflow: hidden;
+    overflow: visible;
 }
 
 
-/* =========================================================
+.room-building p {
+    margin: 0;
+    padding: 0;
+
+    line-height: 1.05;
+}
+
+
+/* =========================
 BOTTOM STACK
-
-Only this element is anchored to the bottom of the page.
-
-Everything inside follows normal document flow:
-
-ECI
-CONTACT BOX
-DEPARTMENT / DATE
-WARNING / 911 / EHS
-========================================================= */
+========================= */
 
 .bottom-stack {
     position: absolute;
@@ -167,10 +171,6 @@ CONTACT SECTION
 }
 
 
-/* =========================
-EMERGENCY CONTACT HEADER
-========================= */
-
 .contact-header {
     color: #B50000;
 
@@ -178,7 +178,7 @@ EMERGENCY CONTACT HEADER
 
     font-family: 'Open Sans';
 
-    font-size: 30px;
+    font-size: 26px;
     font-weight: 700;
 
     line-height: 1;
@@ -186,20 +186,20 @@ EMERGENCY CONTACT HEADER
     width: 100%;
 
     margin: 0 0 4px 0;
-    padding: 0;
 
     white-space: nowrap;
-
-    box-sizing: border-box;
 }
 
 
 /* =========================
-CONTACT TABLE
+TWO-COLUMN CONTACT TABLE
 ========================= */
 
 .contact-table {
     width: 10.5in;
+
+    display: table;
+    table-layout: fixed;
 
     background-color: #FFFFFF;
 
@@ -214,29 +214,26 @@ CONTACT TABLE
 }
 
 
-/* =========================
-CONTACT COLUMN
-========================= */
-
 .contact-column {
-    width: 100%;
+    display: table-cell;
 
-    padding: 10px 18px;
+    width: 50%;
 
-    margin: 0;
+    vertical-align: top;
+
+    padding: 8px 18px;
 
     box-sizing: border-box;
 }
 
 
-/* =========================
-INDIVIDUAL CONTACT ENTRIES
-========================= */
+.contact-column-right {
+    border-left: 3px solid #56A0D3;
+}
+
 
 .contact-column > div {
     width: 100%;
-
-    font-size: 12pt;
 
     line-height: 18px;
 
@@ -249,36 +246,176 @@ INDIVIDUAL CONTACT ENTRIES
 }
 
 
-/* =========================
-CONTACT LABEL
-========================= */
-
 .contact-label {
+    font-size: 9.5pt;
     font-weight: 400;
 
     color: #000000;
 }
 
 
-/* =========================
-CONTACT NAME + PHONE
-========================= */
-
-.contact-column span:not(.contact-label) {
+.contact-value {
+    font-size: 10pt;
     font-weight: 700;
 
     color: #00467F;
 }
 
 
-/* =========================================================
+/* =========================
+BIOSAFETY SECTION
+========================= */
+
+.bio-section {
+    width: 10.5in;
+
+    margin: 5px 0 0 0;
+
+    box-sizing: border-box;
+}
+
+
+.bio-header {
+    color: #B50000;
+
+    text-align: center;
+
+    font-family: 'Open Sans';
+
+    font-size: 24px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    width: 100%;
+
+    margin: 0 0 4px 0;
+
+    white-space: nowrap;
+}
+
+
+.bio-table {
+    width: 10.5in;
+
+    background-color: #FFFFFF;
+
+    border: 3px solid #56A0D3;
+
+    padding: 7px 18px;
+
+    box-sizing: border-box;
+
+    font-family: 'Open Sans';
+}
+
+
+/* =========================
+BSL + OCCUPATIONAL HEALTH
+========================= */
+
+.bio-top-row {
+    width: 100%;
+
+    display: table;
+    table-layout: fixed;
+
+    margin: 0 0 5px 0;
+
+    box-sizing: border-box;
+}
+
+
+.bio-bsl {
+    display: table-cell;
+
+    width: 2.10in;
+
+    vertical-align: middle;
+
+    padding-right: 12px;
+
+    box-sizing: border-box;
+
+    white-space: nowrap;
+}
+
+
+.bio-bsl-text {
+    font-size: 14pt;
+    font-weight: 700;
+
+    color: #B50000;
+
+    white-space: nowrap;
+}
+
+
+.bio-occ {
+    display: table-cell;
+
+    vertical-align: middle;
+
+    border-left: 3px solid #56A0D3;
+
+    padding-left: 14px;
+
+    box-sizing: border-box;
+
+    font-size: 10pt;
+    line-height: 15px;
+}
+
+
+.bio-occ .bio-label {
+    font-weight: 400;
+
+    color: #000000;
+}
+
+
+.bio-occ .bio-value {
+    font-weight: 700;
+
+    color: #00467F;
+
+    margin-left: 4px;
+}
+
+
+/* =========================
+BIOLOGICAL AGENTS
+========================= */
+
+.bio-agents {
+    width: 100%;
+
+    font-size: 11pt;
+    line-height: 18px;
+
+    white-space: normal;
+
+    box-sizing: border-box;
+}
+
+
+.bio-label {
+    font-weight: 400;
+
+    color: #000000;
+}
+
+
+.bio-value {
+    font-weight: 700;
+
+    color: #00467F;
+}
+
+
+/* =========================
 FOOTER
-
-The footer now contains TWO rows:
-
-1. Department / Date Updated
-2. Warning / 911 / EHS
-========================================================= */
+========================= */
 
 .footer {
     width: 10.5in;
@@ -289,16 +426,6 @@ The footer now contains TWO rows:
     box-sizing: border-box;
 }
 
-
-/* =========================
-DEPARTMENT + DATE UPDATED
-========================= */
-
-/*
-Using table/table-cell instead of flex here
-because WeasyPrint handles fixed-height table
-cells very reliably.
-*/
 
 .footer-meta {
     width: 10.5in;
@@ -316,15 +443,8 @@ cells very reliably.
     box-sizing: border-box;
 
     font-family: 'Open Sans';
-
-    margin: 0;
-    padding: 0;
 }
 
-
-/* =========================
-DEPARTMENT / DATE HALVES
-========================= */
 
 .meta-item {
     display: table-cell;
@@ -345,18 +465,10 @@ DEPARTMENT / DATE HALVES
 }
 
 
-/* =========================
-CENTER DIVIDER
-========================= */
-
 .meta-item + .meta-item {
     border-left: 3px solid #56A0D3;
 }
 
-
-/* =========================
-METADATA LABEL
-========================= */
 
 .meta-label {
     font-weight: 400;
@@ -364,10 +476,6 @@ METADATA LABEL
     color: #000000;
 }
 
-
-/* =========================
-METADATA VALUE
-========================= */
 
 .meta-value {
     font-weight: 700;
@@ -379,7 +487,7 @@ METADATA VALUE
 
 
 /* =========================
-MAIN FOOTER ROW
+BOTTOM FOOTER
 ========================= */
 
 .footer-main {
@@ -387,6 +495,7 @@ MAIN FOOTER ROW
     height: 0.55in;
 
     display: flex;
+
     flex-direction: row;
     align-items: stretch;
 
@@ -397,10 +506,6 @@ MAIN FOOTER ROW
 }
 
 
-/* =========================
-PPE WARNING
-========================= */
-
 .warning {
     width: 5.98in;
     height: 0.55in;
@@ -408,29 +513,30 @@ PPE WARNING
     flex: none;
 
     background-color: #56A0D3;
+
     border: 1px solid #56A0D3;
 
     box-sizing: border-box;
 
     padding: 2px 10px;
 
-    color: #FFF;
+    color: #FFFFFF;
+
     text-align: center;
+
     font-family: 'Open Sans';
 
     font-size: 15px;
     font-weight: 800;
+
     line-height: 1.10;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 }
 
-
-/* =========================
-EMERGENCY + EHS
-========================= */
 
 .footer-emergency {
     width: 4.2in;
@@ -441,16 +547,11 @@ EMERGENCY + EHS
     display: flex;
 
     flex-direction: row;
-
     align-items: stretch;
 
     box-sizing: border-box;
 }
 
-
-/* =========================
-EMERGENCY BOX
-========================= */
 
 .emergency-box {
     width: 2.1in;
@@ -467,10 +568,6 @@ EMERGENCY BOX
     position: relative;
 }
 
-
-/* =========================
-EHS BOX
-========================= */
 
 .ehs-box {
     width: 2.1in;
@@ -490,22 +587,22 @@ EHS BOX
 }
 
 
-/* =========================
-EMERGENCY TEXT
-========================= */
-
 .emergency-text {
     color: #B50000;
+
     font-family: 'Open Sans';
 
     font-size: 20px;
     font-weight: 900;
+
     line-height: 1;
 
     text-align: center;
+
     white-space: nowrap;
 
     position: absolute;
+
     top: 50%;
     left: 50%;
 
@@ -516,22 +613,22 @@ EMERGENCY TEXT
 }
 
 
-/* =========================
-EHS TEXT
-========================= */
-
 .ehs-text {
     color: #B50000;
+
     font-family: 'Open Sans';
 
     font-size: 19px;
     font-weight: 900;
+
     line-height: 1;
 
     text-align: center;
+
     white-space: nowrap;
 
     position: absolute;
+
     top: 50%;
     left: 50%;
 
