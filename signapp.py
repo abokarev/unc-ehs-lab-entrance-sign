@@ -152,9 +152,9 @@ def submit():
                 unique_phones.add(alternate_phone)
 
 
-    # Validate at least two unique contact numbers
-    if len(unique_phones) < 2:
-        error_message = "At least two unique contact numbers are required."
+    # Validate at least one contact number
+    if len(unique_phones) < 1:
+        error_message = "At least one contact number is required."
         return render_template(
             'index.html',
             title='EHS Sign Form',

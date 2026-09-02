@@ -512,6 +512,14 @@
         // Function to format phone numbers
         function formatPhoneNumber(input) {
             let phoneNumber = input.value.replace(/\D/g, '');
+
+            // If no digits remain, keep the field truly blank.
+            // This prevents a leftover "(" from being saved or submitted.
+            if (phoneNumber.length === 0) {
+                input.value = '';
+                return;
+            }
+
             if (phoneNumber.length <= 3) {
                 input.value = `(${phoneNumber}`;
             } else if (phoneNumber.length <= 6) {
@@ -640,6 +648,12 @@ function restoreFormState() {
         }
     });
 
+
+    // Clean up restored phone fields in case an older saved form contains
+    // only formatting characters such as a leftover "(".
+    document.querySelectorAll('input[type="tel"]').forEach(function(field) {
+        formatPhoneNumber(field);
+    });
 
     // Re-display conditional sections based on restored selections.
     toggleBiologicalSections();
