@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,52 +13,60 @@
 
 <div class="container">
 
-    <!-- =========================
-    HEADER
-    ========================= -->
-
     <div class="header">
         LABORATORY HAZARD INFORMATION
     </div>
 
 
-    <!-- =========================
-    HAZARD ICONS
-    ONE ROW / FIVE SLOTS
-    ========================= -->
+    <div class="hazard-icons {% if selected_hazard_count > 5 %}hazard-icons-two-row{% else %}hazard-icons-one-row{% endif %}">
 
-    <div class="hazard-icons">
+        {% if selected_hazard_count > 5 %}
+
+        <div class="hazard-row">
+
+            {% for icon in hazard_icons[:5] %}
+
+            <div class="hazard-icon">
+                <img src="{{ icon }}" alt="Hazard Icon">
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="hazard-row">
+
+            {% for icon in hazard_icons[5:10] %}
+
+            <div class="hazard-icon">
+                <img src="{{ icon }}" alt="Hazard Icon">
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
 
         {% for icon in hazard_icons[:5] %}
 
-        <div>
+        <div class="hazard-icon">
             <img src="{{ icon }}" alt="Hazard Icon">
         </div>
 
         {% endfor %}
 
+        {% endif %}
+
     </div>
 
 
-    <!-- =========================
-    ROOM + BUILDING
-    ========================= -->
-
-    <div class="room-building">
+    <div class="room-building {% if selected_hazard_count > 5 %}room-building-two-row{% else %}room-building-one-row{% endif %}">
         <p>{{ room }} {{ building }}</p>
     </div>
 
 
-    <!-- =========================
-    BOTTOM STACK
-    ========================= -->
-
     <div class="bottom-stack">
-
-
-        <!-- =========================
-        CONTACT + BIOSAFETY
-        ========================= -->
 
         <div class="info-section">
 
@@ -77,9 +84,6 @@
 
 
             <div class="info-table">
-
-
-                <!-- CONTACTS -->
 
                 <div class="contact-panel">
 
@@ -102,20 +106,15 @@
                 </div>
 
 
-                <!-- BIOSAFETY -->
-
                 <div class="bio-panel">
 
                     <div class="bio-top-row">
 
                         <div class="bio-bsl">
-
                             <span class="bio-bsl-text">
                                 Biosafety Level {{ bsl|replace('BSL', '') }}
                             </span>
-
                         </div>
-
 
                         <div class="bio-occ">
 
@@ -151,10 +150,6 @@
         </div>
 
 
-        <!-- =========================
-        FOOTER
-        ========================= -->
-
         <div class="footer">
 
             <div class="footer-meta">
@@ -175,31 +170,24 @@
             <div class="footer-main">
 
                 <div class="warning">
-
                     <div class="warning-text">
                         PPE REQUIRED AT ALL TIMES (LAB COAT, EYE PROTECTION, CLOSED-TOE SHOES, LONG PANTS). EATING &amp; DRINKING ARE PROHIBITED IN LAB AREAS.
                     </div>
-
                 </div>
 
 
                 <div class="footer-emergency">
 
                     <div class="emergency-box">
-
                         <div class="emergency-text">
                             EMERGENCY: 911
                         </div>
-
                     </div>
 
-
                     <div class="ehs-box">
-
                         <div class="ehs-text">
                             EHS: (919) 962-5507
                         </div>
-
                     </div>
 
                 </div>

@@ -215,7 +215,8 @@ def submit():
         'contacts': contacts,
         'department': department,
         'date_updated': datetime.today().strftime('%m/%d/%Y'),
-        'hazard_icons': selected_hazards
+        'hazard_icons': selected_hazards,
+        'selected_hazard_count': selected_hazard_count
     }
 
     # Determine if 'biohazard' is selected
@@ -371,10 +372,11 @@ def submit():
 
     orientation = request.form.get('orientation', 'horizontal')
 
-    # Compact seven-icon layout is used only for shared bio signs
-    # with 6 or 7 actual selected hazards.
+    # Compact seven-icon layout is used only for larger shared bio signs
+    # (4-6 PIs) with 6 or 7 actual selected hazards.
+    # Shared bio signs with 2-3 PIs keep the normal 2x5 hazard layout.
     use_7_icon_shared_bio = (
-        num_pis > 1
+        num_pis > 3
         and 6 <= selected_hazard_count <= 7
     )
 

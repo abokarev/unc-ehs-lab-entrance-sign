@@ -27,15 +27,45 @@
     HAZARD ICONS
     ========================= -->
 
-    <div class="hazard-icons">
+    <div class="hazard-icons {% if selected_hazard_count > 5 %}hazard-icons-two-row{% else %}hazard-icons-one-row{% endif %}">
+
+        {% if selected_hazard_count > 5 %}
+
+        <div class="hazard-row">
+
+            {% for icon in hazard_icons[:5] %}
+
+            <div class="hazard-icon">
+                <img src="{{ icon }}" alt="Hazard Icon">
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="hazard-row">
+
+            {% for icon in hazard_icons[5:10] %}
+
+            <div class="hazard-icon">
+                <img src="{{ icon }}" alt="Hazard Icon">
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+        {% else %}
 
         {% for icon in hazard_icons[:5] %}
 
-        <div>
+        <div class="hazard-icon">
             <img src="{{ icon }}" alt="Hazard Icon">
         </div>
 
         {% endfor %}
+
+        {% endif %}
 
     </div>
 
@@ -44,7 +74,7 @@
     ROOM + BUILDING
     ========================= -->
 
-    <div class="room-building">
+    <div class="room-building {% if selected_hazard_count > 5 %}room-building-two-row{% else %}room-building-one-row{% endif %}">
         <p>{{ room }} {{ building }}</p>
     </div>
 

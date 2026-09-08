@@ -109,7 +109,7 @@ Directly beneath hazard row
 
     font-family: 'Open Sans';
 
-    font-size: 70px;
+    font-size: 60px;
     font-weight: 700;
 
     width: 7.5in;
@@ -184,7 +184,7 @@ CONTACT SECTION
 
     font-family: 'Open Sans';
 
-    font-size: 12pt;
+    font-size: 26px;
     font-weight: 700;
 
     line-height: 1;
@@ -257,9 +257,9 @@ CONTACT SECTION
 }
 
 
-/* =========================================================
+/* =========================
 BIOSAFETY SECTION
-========================================================= */
+========================= */
 
 .bio-section {
     width: 7.5in;
@@ -271,10 +271,6 @@ BIOSAFETY SECTION
 }
 
 
-/* =========================
-BIOSAFETY HEADER
-========================= */
-
 .bio-header {
     color: #B50000;
 
@@ -282,14 +278,14 @@ BIOSAFETY HEADER
 
     font-family: 'Open Sans';
 
-    font-size: 28px;
+    font-size: 26px;
     font-weight: 700;
 
     line-height: 1;
 
     width: 100%;
 
-    margin: 0 0 4px 0;
+    margin: 0 0 5px 0;
     padding: 0;
 
     white-space: nowrap;
@@ -297,10 +293,6 @@ BIOSAFETY HEADER
     box-sizing: border-box;
 }
 
-
-/* =========================
-BIOSAFETY TABLE
-========================= */
 
 .bio-table {
     width: 7.5in;
@@ -319,15 +311,10 @@ BIOSAFETY TABLE
 }
 
 
-/* =========================================================
-BSL + OCCUPATIONAL HEALTH ROW
-========================================================= */
-
 .bio-top-row {
     width: 100%;
 
     display: table;
-
     table-layout: fixed;
 
     margin: 0 0 6px 0;
@@ -336,10 +323,6 @@ BSL + OCCUPATIONAL HEALTH ROW
     box-sizing: border-box;
 }
 
-
-/* =========================
-BIOSAFETY LEVEL
-========================= */
 
 .bio-bsl {
     display: table-cell;
@@ -358,7 +341,6 @@ BIOSAFETY LEVEL
 
 .bio-bsl-text {
     font-size: 14pt;
-
     font-weight: 700;
 
     color: #B50000;
@@ -366,10 +348,6 @@ BIOSAFETY LEVEL
     white-space: nowrap;
 }
 
-
-/* =========================
-OCCUPATIONAL HEALTH
-========================= */
 
 .bio-occ {
     display: table-cell;
@@ -383,28 +361,18 @@ OCCUPATIONAL HEALTH
     box-sizing: border-box;
 
     font-size: 11pt;
-    line-height: 18px;
-
-    white-space: nowrap;
+    line-height: 16px;
 }
 
 
-/* Occupational Health label */
-
 .bio-occ .bio-label {
-    display: inline;
-
     font-weight: 400;
 
     color: #000000;
 }
 
 
-/* Occupational Health value */
-
 .bio-occ .bio-value {
-    display: inline;
-
     font-weight: 700;
 
     color: #00467F;
@@ -412,10 +380,6 @@ OCCUPATIONAL HEALTH
     margin-left: 4px;
 }
 
-
-/* =========================
-BIOLOGICAL AGENTS
-========================= */
 
 .bio-agents {
     width: 100%;
@@ -426,15 +390,11 @@ BIOLOGICAL AGENTS
     box-sizing: border-box;
 
     font-size: 11pt;
-    line-height: 18px;
+    line-height: 17px;
 
     white-space: normal;
 }
 
-
-/* =========================
-BIOSAFETY LABELS
-========================= */
 
 .bio-label {
     font-weight: 400;
@@ -442,10 +402,6 @@ BIOSAFETY LABELS
     color: #000000;
 }
 
-
-/* =========================
-BIOSAFETY VALUES
-========================= */
 
 .bio-value {
     font-weight: 700;
