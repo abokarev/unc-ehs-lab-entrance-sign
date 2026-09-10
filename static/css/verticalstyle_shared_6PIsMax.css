@@ -148,7 +148,7 @@ ROOM + BUILDING
 
     font-family: 'Open Sans';
 
-    font-size: 60px;
+    font-size: 70px;
     font-weight: 700;
 
     width: 7.5in;
@@ -486,4 +486,31 @@ EMERGENCY + EHS
 
     margin: 0;
     padding: 0;
+}
+
+/* =========================
+DYNAMIC DEPARTMENT FONT SIZING
+Keeps the footer cells at their existing dimensions.
+Only the Department text shrinks when the name is long.
+Date Updated remains at the normal 10pt size.
+========================= */
+
+.department-meta.meta-font-9 {
+    font-size: 9pt;
+    line-height: 13px;
+}
+
+.department-meta.meta-font-8 {
+    font-size: 8pt;
+    line-height: 12px;
+}
+
+.department-meta.meta-font-7 {
+    font-size: 7pt;
+    line-height: 11px;
+}
+
+.department-meta.meta-font-6 {
+    font-size: 6pt;
+    line-height: 10px;
 }
