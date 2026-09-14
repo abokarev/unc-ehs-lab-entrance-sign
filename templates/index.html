@@ -176,6 +176,20 @@
                             <label for="xray"><img src="{{ url_for('static', filename='images/02xray.png') }}" alt="X-Ray Equipment"></label>
                         </div>
                     </div>
+                    <div class="grid-item">
+                        <h3>High Voltage</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="highvoltage" name="highvoltage" value="highvoltage" {{ 'checked' if 'highvoltage' in request.form else '' }}>
+                            <label for="highvoltage"><img src="{{ url_for('static', filename='images/15high_voltage.png') }}" alt="High Voltage"></label>
+                        </div>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Strong Magnetic Field</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="strongmagneticfield" name="strongmagneticfield" value="strongmagneticfield" {{ 'checked' if 'strongmagneticfield' in request.form else '' }}>
+                            <label for="strongmagneticfield"><img src="{{ url_for('static', filename='images/16strong_magnetic_field.png') }}" alt="Strong Magnetic Field"></label>
+                        </div>
+                    </div>
                 </div>
             </fieldset>
         </section>
@@ -465,7 +479,7 @@
             </fieldset>
         </section>
         
-        <section>
+        <section style="display: none;">
             <fieldset>
                 <legend>Sign Details</legend>
 

@@ -179,6 +179,8 @@ def submit():
         'water': '12water.svg',
         'flammableg': '13flammable_gas.svg',
         'nflammableg': '14non_flammable_gas.svg',
+        'highvoltage': '15high_voltage.png',
+        'strongmagneticfield': '16strong_magnetic_field.png',
     }
 
     # Create a list of selected hazard icons with proper URLs
