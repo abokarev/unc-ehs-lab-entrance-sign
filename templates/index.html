@@ -190,6 +190,13 @@
                             <label for="strongmagneticfield"><img src="{{ url_for('static', filename='images/16strong_magnetic_field.png') }}" alt="Strong Magnetic Field"></label>
                         </div>
                     </div>
+                    <div class="grid-item">
+                        <h3>Loud Noise ≥80 dB(A)</h3>
+                        <div class="row-layout">
+                            <input type="checkbox" id="loudnoise" name="loudnoise" value="loudnoise" {{ 'checked' if 'loudnoise' in request.form else '' }}>
+                            <label for="loudnoise"><img src="{{ url_for('static', filename='images/17loud_noise.png') }}" alt="Loud Noise 80 dB(A) or above"></label>
+                        </div>
+                    </div>
                 </div>
             </fieldset>
         </section>

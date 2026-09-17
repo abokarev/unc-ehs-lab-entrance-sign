@@ -165,22 +165,23 @@ def submit():
 
     # Extract form data for Laboratory Hazards
     hazards = {
-        'radioactive': '01radioactive.svg',
-        'xray': '02xray.svg',
-        'laser': '03laser.svg',
-        'biohazard': '04biohazard.svg',
-        'cancer': '05cancer.svg',
-        'toxic': '06toxic.svg',
-        'reproductive': '07reproductive_toxin.svg',
-        'corrosive': '08corrosive.svg',
-        'ultraviolet': '09ultraviolet.svg',
-        'flammablem': '10flammable_materials.svg',
-        'oxidizing': '11oxidizing.svg',
-        'water': '12water.svg',
-        'flammableg': '13flammable_gas.svg',
-        'nflammableg': '14non_flammable_gas.svg',
+        'radioactive': '01radioactive.png',
+        'xray': '02xray.png',
+        'laser': '03laser.png',
+        'biohazard': '04biohazard.png',
+        'cancer': '05cancer.png',
+        'toxic': '06toxic.png',
+        'reproductive': '07reproductive_toxin.png',
+        'corrosive': '08corrosive.png',
+        'ultraviolet': '09ultraviolet.png',
+        'flammablem': '10flammable_materials.png',
+        'oxidizing': '11oxidizing.png',
+        'water': '12water.png',
+        'flammableg': '13flammable_gas.png',
+        'nflammableg': '14non_flammable_gas.png',
         'highvoltage': '15high_voltage.png',
         'strongmagneticfield': '16strong_magnetic_field.png',
+        'loudnoise': '17loud_noise.png',
     }
 
     # Create a list of selected hazard icons with proper URLs
