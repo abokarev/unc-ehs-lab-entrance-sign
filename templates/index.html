@@ -76,7 +76,7 @@
         <section>
             <fieldset class="lab_hazards_fieldset">
                 <legend>Laboratory Hazards</legend>
-                <p>Indicate the hazards present in your workspace.</p>
+                <p>Indicate the hazards present in your workspace. Select a maximum of 10 hazards.</p>
                 <div class="grid-container">
                     <div class="grid-item">
                         <h3>Biohazard</h3>
@@ -827,8 +827,30 @@ function updateContactFields() {
     }
 }
 
+        // Keep lab entrance signs at the 10-hazard maximum.
+        function enforceHazardLimit(changedCheckbox) {
+            var selectedHazards = document.querySelectorAll('.lab_hazards_fieldset input[type="checkbox"]:checked');
+
+            if (selectedHazards.length > 10) {
+                if (changedCheckbox) {
+                    changedCheckbox.checked = false;
+                }
+                alert('A maximum of 10 laboratory hazards can be selected.');
+                return false;
+            }
+
+            return true;
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             var form = document.forms['form1'];
+
+            // Enforce the 10-hazard maximum as selections are made.
+            document.querySelectorAll('.lab_hazards_fieldset input[type="checkbox"]').forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    enforceHazardLimit(this);
+                });
+            });
 
             // Add event listeners for toggleable sections
             document.getElementById('biohazard').addEventListener('change', toggleBiologicalSections);

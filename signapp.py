@@ -195,6 +195,17 @@ def submit():
     # Shared bio signs with 6-7 hazards use the compact seven-icon layout.
     selected_hazard_count = len(selected_hazards)
 
+    # Lab entrance signs support a maximum of 10 hazard icons.
+    if selected_hazard_count > 10:
+        error_message = "Please select no more than 10 laboratory hazards."
+        return render_template(
+            'index.html',
+            title='EHS Sign Form',
+            buildings=buildings,
+            error_message=error_message,
+            request_form=request.form
+        )
+
     # Ensure there are 10 icons, filling with EMPTY.png if necessary
     while len(selected_hazards) < 10:
         selected_hazards.append(f'{request.host_url}static/images/00EMPTY.png')
@@ -383,6 +394,13 @@ def submit():
         and 6 <= selected_hazard_count <= 7
     )
 
+    # Larger 4-6 PI shared bio signs with 8-10 hazards use the
+    # two-row max-capacity layout.
+    use_10_icon_shared_bio = (
+        num_pis > 3
+        and 8 <= selected_hazard_count <= 10
+    )
+
     # =========================
     # BIOHAZARD SIGNS
     # =========================
@@ -407,6 +425,8 @@ def submit():
             else:
                 if use_7_icon_shared_bio:
                     template = 'vert_bio_shared_6PIsMax_7icons.html'
+                elif use_10_icon_shared_bio:
+                    template = 'vert_bio_shared_6PIsMax_10icons.html'
                 else:
                     template = 'vert_bio_shared_6PIsMax.html'
 
@@ -428,6 +448,8 @@ def submit():
             else:
                 if use_7_icon_shared_bio:
                     template = 'horiz_bio_shared_6PIsMax_7icons.html'
+                elif use_10_icon_shared_bio:
+                    template = 'horiz_bio_shared_6PIsMax_10icons.html'
                 else:
                     template = 'horiz_bio_shared_6PIsMax.html'
 

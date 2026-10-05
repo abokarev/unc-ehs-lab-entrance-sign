@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lab Sign Template</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vert_bio_style_shared_6PIsMax_10icons.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- =========================
+    HEADER
+    ========================= -->
+
+    <div class="header">
+        LABORATORY HAZARD INFORMATION
+    </div>
+
+
+    <!-- =========================
+    HAZARD ICONS
+    TWO ROWS / TEN SLOTS MAX
+    ========================= -->
+
+    <div class="hazard-icons">
+
+        {% for icon in hazard_icons[:10] %}
+
+        <div>
+            <img src="{{ icon }}" alt="Hazard Icon">
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- =========================
+    ROOM + BUILDING
+    ========================= -->
+
+    <div class="room-building">
+        <p>{{ room }} {{ building }}</p>
+    </div>
+
+
+    <!-- =========================
+    BOTTOM STACK
+    ========================= -->
+
+    <div class="bottom-stack">
+
+
+        <!-- =========================
+        EMERGENCY CONTACTS
+        ========================= -->
+
+        <div class="contact-section">
+
+            <div class="contact-header">
+                EMERGENCY CONTACT INFORMATION
+            </div>
+
+
+            <div class="contact-table">
+
+                <div class="contact-column">
+
+                    {% for contact in contacts %}
+
+                    <div class="contact-entry">
+
+                        <span class="contact-label">
+                            {{ contact.label }}:
+                        </span>
+
+                        <span class="contact-value">
+                            {{ contact.name }}, {{ contact.phone }}
+                        </span>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+        BIOSAFETY INFORMATION
+        ========================= -->
+
+        <div class="bio-section">
+
+            <div class="bio-header">
+                BIOSAFETY INFORMATION
+            </div>
+
+
+            <div class="bio-table">
+
+                <div class="bio-top-row">
+
+                    <div class="bio-bsl">
+
+                        <span class="bio-bsl-text">
+                            Biosafety Level {{ bsl|replace('BSL', '') }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="bio-occ">
+
+                        <span class="bio-label">
+                            Occupational Health Requirements:
+                        </span>
+
+                        <span class="bio-value">
+                            {{ occupational_health_requirements }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="bio-agents">
+
+                    <span class="bio-label">
+                        Biological Agents:
+                    </span>
+
+                    <span class="bio-value">
+                        {{ biological_agents }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+        FOOTER
+        ========================= -->
+
+        <div class="footer">
+
+            <div class="footer-meta">
+
+                <div class="meta-item">
+                    <span class="meta-label">Department:</span>
+                    <span class="meta-value">{{ department }}</span>
+                </div>
+
+                <div class="meta-item">
+                    <span class="meta-label">Date Updated:</span>
+                    <span class="meta-value">{{ date_updated }}</span>
+                </div>
+
+            </div>
+
+
+            <div class="warning">
+
+                <div class="warning-text">
+                    PPE REQUIRED AT ALL TIMES (LAB COAT, EYE PROTECTION, CLOSED-TOE SHOES, LONG PANTS). EATING &amp; DRINKING ARE PROHIBITED IN LAB AREAS.
+                </div>
+
+            </div>
+
+
+            <div class="footer-emergency">
+
+                <div class="emergency-box">
+
+                    <div class="emergency-text">
+                        EMERGENCY: 911
+                    </div>
+
+                </div>
+
+
+                <div class="ehs-box">
+
+                    <div class="ehs-text">
+                        EHS: (919) 962-5507
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
